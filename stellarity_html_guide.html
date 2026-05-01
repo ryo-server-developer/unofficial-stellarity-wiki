@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stellarity 攻略ガイド</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+  :root {
+    --bg: #0d0d1a;
+    --card: #161628;
+    --card2: #1e1e38;
+    --accent: #a78bfa;
+    --accent2: #818cf8;
+    --gold: #fbbf24;
+    --green: #34d399;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #2d2d5a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans JP', sans-serif; line-height: 1.7; }
+
+  /* ヘッダー */
+  header {
+    background: linear-gradient(135deg, #0d0d1a 0%, #1a1040 50%, #0d0d1a 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦';
+    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    color: var(--accent); opacity: 0.3; font-size: 12px; white-space: nowrap;
+  }
+  header h1 { font-size: 2.8em; font-weight: 900; background: linear-gradient(90deg, var(--accent), var(--blue), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  header p { color: var(--muted); margin-top: 8px; font-size: 0.95em; }
+  .header-img { width: 100%; max-width: 700px; border-radius: 12px; margin: 20px auto 0; display: block; border: 2px solid var(--border); object-fit: cover; max-height: 280px; }
+
+  /* ナビ */
+  nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 20px; position: sticky; top: 0; z-index: 100; display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  nav a { color: var(--accent); text-decoration: none; font-size: 0.85em; padding: 5px 12px; border: 1px solid var(--border); border-radius: 20px; transition: all 0.2s; }
+  nav a:hover { background: var(--accent); color: #0d0d1a; }
+
+  /* レイアウト */
+  .container { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+
+  /* セクション */
+  section { margin-bottom: 50px; }
+  .section-title {
+    font-size: 1.6em; font-weight: 900; margin-bottom: 20px;
+    padding: 12px 20px; border-radius: 10px;
+    background: linear-gradient(90deg, var(--card2), transparent);
+    border-left: 4px solid var(--accent);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .emoji { font-size: 1.2em; }
+
+  /* カード */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .card-title { font-weight: 700; font-size: 1.1em; color: var(--accent); margin-bottom: 8px; }
+  .card-sub { font-size: 0.82em; color: var(--muted); }
+
+  /* グリッド */
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+
+  /* 画像カード */
+  .img-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .img-card img { width: 100%; height: 160px; object-fit: cover; display: block; }
+  .img-card .img-label { padding: 10px 14px; font-size: 0.88em; font-weight: 700; color: var(--accent); }
+  .img-card .img-desc { padding: 0 14px 12px; font-size: 0.82em; color: var(--muted); }
+
+  /* バイオームカード */
+  .biome-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px; position: relative; overflow: hidden;
+  }
+  .biome-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .biome-fields::before { background: linear-gradient(90deg, #34d399, #6ee7b7); }
+  .biome-barrens::before { background: linear-gradient(90deg, #f87171, #fca5a5); }
+  .biome-forests::before { background: linear-gradient(90deg, #a78bfa, #c4b5fd); }
+  .biome-frozen::before { background: linear-gradient(90deg, #60a5fa, #93c5fd); }
+  .biome-name { font-weight: 700; font-size: 1em; color: var(--text); }
+  .biome-kana { font-size: 0.78em; color: var(--muted); margin-bottom: 6px; }
+  .biome-desc { font-size: 0.84em; color: var(--muted); margin-bottom: 8px; }
+  .danger-bar { display: flex; gap: 3px; align-items: center; }
+  .danger-bar span { font-size: 0.75em; color: var(--muted); margin-right: 4px; }
+  .star { font-size: 0.9em; }
+  .star.on { color: var(--gold); }
+  .star.off { color: #2d2d5a; }
+
+  /* ボスカード */
+  .boss-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+  .boss-header { background: linear-gradient(135deg, #1e1e38, #2d1b4e); padding: 20px; display: flex; gap: 16px; align-items: flex-start; }
+  .boss-header img { width: 280px; height: 160px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+  .boss-header-text h3 { font-size: 1.3em; font-weight: 900; color: var(--accent); }
+  .boss-header-text .kana { font-size: 0.82em; color: var(--muted); }
+  .boss-stats { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  .boss-stat { background: rgba(255,255,255,0.07); border-radius: 6px; padding: 4px 10px; font-size: 0.82em; }
+  .boss-stat.hp { color: var(--red); }
+  .boss-stat.warn { color: var(--gold); }
+  .boss-body { padding: 20px; }
+  .boss-body h4 { font-size: 0.95em; font-weight: 700; color: var(--accent2); margin: 14px 0 6px; }
+
+  /* テーブル */
+  table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+  th { background: var(--card2); color: var(--accent); padding: 10px 14px; text-align: left; font-size: 0.85em; }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .name-cell { font-weight: 700; }
+  .kana-small { display: block; font-size: 0.78em; color: var(--muted); font-weight: 400; }
+
+  /* バッジ */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.75em; font-weight: 700; }
+  .badge-purple { background: rgba(167,139,250,0.2); color: var(--accent); border: 1px solid rgba(167,139,250,0.4); }
+  .badge-green { background: rgba(52,211,153,0.2); color: var(--green); border: 1px solid rgba(52,211,153,0.4); }
+  .badge-red { background: rgba(248,113,113,0.2); color: var(--red); border: 1px solid rgba(248,113,113,0.4); }
+  .badge-blue { background: rgba(96,165,250,0.2); color: var(--blue); border: 1px solid rgba(96,165,250,0.4); }
+  .badge-gold { background: rgba(251,191,36,0.2); color: var(--gold); border: 1px solid rgba(251,191,36,0.4); }
+
+  /* チップス */
+  .tip { background: rgba(167,139,250,0.1); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0; font-size: 0.88em; }
+  .tip strong { color: var(--accent); }
+  .warn { background: rgba(251,191,36,0.08); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0; font-size: 0.88em; }
+  .warn strong { color: var(--gold); }
+
+  /* 準備チェック */
+  .checklist { list-style: none; }
+  .checklist li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.92em; display: flex; gap: 10px; align-items: flex-start; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '◆'; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+
+  /* メカニクスカード */
+  .mech-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+  .mech-title { font-weight: 700; font-size: 1.05em; color: var(--gold); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .mech-kana { font-size: 0.8em; color: var(--muted); font-weight: 400; }
+  .mech-body { font-size: 0.88em; color: var(--muted); }
+
+  /* カテゴリラベル */
+  .cat-label { font-size: 0.8em; font-weight: 700; padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 12px; }
+  .cat-fields { background: rgba(52,211,153,0.15); color: var(--green); }
+  .cat-barrens { background: rgba(248,113,113,0.15); color: var(--red); }
+  .cat-forests { background: rgba(167,139,250,0.15); color: var(--accent); }
+  .cat-frozen { background: rgba(96,165,250,0.15); color: var(--blue); }
+
+  /* フッター */
+  footer { text-align: center; padding: 30px; color: var(--muted); font-size: 0.82em; border-top: 1px solid var(--border); }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 2em; }
+    .boss-header { flex-direction: column; }
+    .boss-header img { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌌 Stellarity 攻略ガイド</h1>
+  <p>Minecraft The End リワークデータパック 非公式日本語攻略</p>
+  <img class="header-img"
+    src="https://cdn.modrinth.com/data/bZgeDzN8/images/e352acc6e3ae3b8259b5c27553e00400c2c17b94_350.webp"
+    alt="Stellarity The Hallow バイオーム"
+    onerror="this.style.display='none'">
+</header>
+
+<nav>
+  <a href="#overview">📖 概要</a>
+  <a href="#beginner">⚔️ 序盤</a>
+  <a href="#biomes">🌿 バイオーム</a>
+  <a href="#structures">🏰 構造物</a>
+  <a href="#bosses">🐉 ボス</a>
+  <a href="#items">🗡️ アイテム</a>
+  <a href="#mobs">👾 モブ</a>
+  <a href="#mechanics">⚙️ メカニクス</a>
+</nav>
+
+<div class="container">
+
+  <!-- 概要 -->
+  <section id="overview">
+    <div class="section-title"><span class="emoji">📖</span> Stellarityとは</div>
+    <div class="card">
+      <p>StellarityはMinecraftのThe Endを根本から作り直すデータパックです。ライトとダークの魔法・幻想をテーマに、全く新しい地形・バイオーム・アイテム・ボスが追加されます。</p>
+      <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+        <span class="badge badge-purple">23種 バイオーム</span>
+        <span class="badge badge-gold">40種以上 アイテム</span>
+        <span class="badge badge-red">強化ボス2体</span>
+        <span class="badge badge-green">新メカニクス多数</span>
+        <span class="badge badge-blue">Minecraft 1.21対応</span>
+      </div>
+    </div>
+    <div class="grid3" style="margin-top:16px;">
+      <div class="img-card">
+        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/cb882152fc274a9f62893618d873569dfb429575_350.webp" alt="バイオーム" onerror="this.style.background:'#1e1e38'">
+        <div class="img-label">多彩なバイオーム</div>
+        <div class="img-desc">End Highlands など23種類のバイオームが生成</div>
+      </div>
+      <div class="img-card">
+        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/b5dec8f98df7200694e90ff3e6922239308d9940_350.webp" alt="Stronghold" onerror="this.style.background:'#1e1e38'">
+        <div class="img-label">巨大Stronghold</div>
+        <div class="img-desc">バニラの約7倍の規模に拡張、Illagerが守る</div>
+      </div>
+      <div class="img-card">
+        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/e24c7e81fbfb30ea442596fd98b6207e5031d4a9_350.webp" alt="メカニクス" onerror="this.style.background:'#1e1e38'">
+        <div class="img-label">独自メカニクス</div>
+        <div class="img-desc">Void FishingやBreath Craftingなど固有システム</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 序盤 -->
+  <section id="beginner">
+    <div class="section-title"><span class="emoji">⚔️</span> 序盤の進め方</div>
+
+    <div class="card">
+      <div class="card-title">🎒 The Endへ入る前の準備</div>
+      <p style="font-size:0.88em; color:var(--muted); margin-bottom:12px;">Stellarityのモブ・バイオームはバニラより大幅に強化されています。万全の準備で挑みましょう。</p>
+      <ul class="checklist">
+        <li><strong>装備</strong>：フルNetherite推奨。Protection IVとFeather Falling IVは必須級</li>
+        <li><strong>食料</strong>：十分な量を持参。The EndからOverworldへの帰還は困難</li>
+        <li><strong>弓 &amp; 矢</strong>：Infinity enchant または大量の矢（Crystal破壊に必須）</li>
+        <li><strong>炎耐性ポーション</strong>：Evoker対策。Empress of Light戦でも有効</li>
+        <li><strong>松明・マーカー</strong>：Strongholdは巨大で迷いやすい</li>
+      </ul>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">🏰 Stronghold（ストロングホールド）攻略</div>
+        <p style="font-size:0.85em; color:var(--muted);">バニラの約7倍の規模。IllagerたちがEnd Portalを死守しています。</p>
+        <div class="tip" style="margin-top:10px;"><strong>💡 Tip</strong>：内部にSculk Labなどの隠し部屋が存在します。隅々まで探索しましょう！</div>
+        <div class="warn"><strong>⚠️ 注意</strong>：すべてのPortal Roomが同じ構造ではありません。</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🌀 The Endに入ったら最初にやること</div>
+        <ul class="checklist">
+          <li>周囲のバイオームと地形を把握する</li>
+          <li>Prismarine Forestなど安全なバイオームに拠点を構える</li>
+          <li>Ender Dragon撃破前に十分なアイテムを集める</li>
+          <li>Dragon撃破後にAltar of The Accursedが解放されることを頭に入れておく</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- バイオーム -->
+  <section id="biomes">
+    <div class="section-title"><span class="emoji">🌿</span> バイオーム攻略</div>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+      <span class="badge badge-green">Fields：平原系</span>
+      <span class="badge badge-red">Barrens：荒地系</span>
+      <span class="badge badge-purple">Forests：森林系</span>
+      <span class="badge badge-blue">Frozen：凍結系</span>
+    </div>
+
+    <div class="grid2" style="margin-bottom:16px;">
+      <div class="img-card">
+        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/b77957d0f75bfb1484e0f5d27fa01ade76217d45_350.webp" alt="各種バイオーム" onerror="this.style.background:'#1e1e38'">
+        <div class="img-label">バイオームの多様性</div>
+        <div class="img-desc">沼地・ツンドラ・砂漠・森など様々な環境が広がる</div>
+      </div>
+      <div class="img-card">
+        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/97fc666fdf09e8dd360de20066937b7b62e030f8_350.webp" alt="凍結バイオーム" onerror="this.style.background:'#1e1e38'">
+        <div class="img-label">Frozen Spikes</div>
+        <div class="img-desc">凍結バイオームの一例。左にEnd Barrensも見える</div>
+      </div>
+    </div>
+
+    <div class="cat-label cat-fields">🟢 Fields（フィールズ）</div>
+    <div class="grid2" style="margin-bottom:20px;">
+      <div class="biome-card biome-fields">
+        <div class="biome-name">The Hallow</div>
+        <div class="biome-kana">ザ・ハロウ</div>
+        <div class="biome-desc">明るく幻想的な外観。Terrariaにインスパイアされたバイオーム。比較的安全で探索しやすい。</div>
+        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span><span class="star off">★</span></div>
+      </div>
+      <div class="biome-card biome-fields">
+        <div class="biome-name">End Midlands / End Wilds</div>
+        <div class="biome-kana">エンド・ミッドランズ / エンド・ワイルズ</div>
+        <div class="biome-desc">開けた地形で視界が良好。バニラのEnd感が残る中間的なバイオーム。</div>
+        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span><span class="star off">★</span></div>
+      </div>
+    </div>
+
+    <div class="cat-label cat-barrens">🔴 Barrens（バレンズ）</div>
+    <div class="grid2" style="margin-bottom:20px;">
+      <div class="biome-card biome-barrens">
+        <div class="biome-name">End Barrens</div>
+        <div class="biome-kana">エンド・バレンズ</div>
+        <div class="biome-desc">高い丘が特徴的な荒地。高所からの落下は死を招くため要注意。</div>
+        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span></div>
+      </div>
+      <div class="biome-card biome-barrens">
+        <div class="biome-name">Ashfall Deltas</div>
+        <div class="biome-kana">アッシュフォール・デルタス</div>
+        <div class="biome-desc">火山灰が漂う荒廃した三角州地帯。水路が複雑に入り組んでいる。</div>
+        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span></div>
+      </div>
+      <div class="biome-card biome-barrens">
+        <div class="biome-name">Flesh Tundra</div>
+        <div class="biome-kana">フレッシュ・ツンドラ</div>
+        <div class="biome-desc">肉質のブロックで構成されたおぞましいツンドラ。名前の由来は見れば分かる…。</div>
+        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span></div>
+      </div>
+      <div class="biome-card biome-barrens">
+        <div class="biome-name">Crystal Crags / The Nest</div>
+        <div class="biome-kana">クリスタル・クラッグス / ザ・ネスト</div>
+        <div class="biome-desc">結晶の岩山や巣穴状の地形。見た目は美しいが危険な生き物が潜む。</div>
+        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span></div>
+      </div>
+    </div>
+
+    <div class="cat-label cat-forests">🟣 Forests（フォレスツ）</div>
+    <div class="grid2" style="margin-bottom:20px;">
+      <div class="biome-card biome-forests">
+        <div class="biome-name">Amethyst Forest</div>
+        <div class="biome-kana">アメジスト・フォレスト</div>
+        <div class="biome-desc">アメジストの結晶が輝く幻想的な森。End Villageが生成されることもある。</div>
+        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span><span class="star off">★</span></div>
+      </div>
+      <div class="biome-card biome-forests">
+        <div class="biome-name">Prismarine Forest</div>
+        <div class="biome-kana">プリズマリン・フォレスト</div>
+        <div class="biome-desc">⭐ 敵対モブがスポーンしない安全地帯！緊急避難や拠点候補として最適。</div>
+        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span><span class="star off">★</span><span class="star off">★</span></div>
+      </div>
+      <div class="biome-card biome-forests">
+        <div class="biome-name">Warped Marsh</div>
+        <div class="biome-kana">ワープド・マーシュ</div>
+        <div class="biome-desc">歪んだ植生の沼地。視界が悪く方向感覚を失いやすい。強敵が潜む。</div>
+        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span></div>
+      </div>
+    </div>
+
+    <div class="cat-label cat-frozen">🔵 Frozen（フローズン）</div>
+    <div class="grid2">
+      <div class="biome-card biome-frozen">
+        <div class="biome-name">Frozen Spikes / その他Frozen系</div>
+        <div class="biome-kana">フローズン・スパイクス</div>
+        <div class="biome-desc">既存バイオームの凍結バリアント。白を基調とした暗い色合い。通常版より強化された敵が出現することがある。</div>
+        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 構造物 -->
+  <section id="structures">
+    <div class="section-title"><span class="emoji">🏰</span> 構造物攻略</div>
+    <div class="grid2">
+      <div class="img-card">
+        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/f1f258c0824c58bae454e25748927851b74aa165_350.webp" alt="Stronghold inside" onerror="this.style.background:'#1e1e38'">
+        <div class="img-label">Stronghold（内部）</div>
+        <div class="img-desc">MASSIVE。これが全てを物語る</div>
+      </div>
+      <div class="img-card">
+        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/c8b0e739d4325a761b53a82c0129b411cc7c2541_350.webp" alt="End City" onerror="this.style.background:'#1e1e38'">
+        <div class="img-label">End City（リワーク版）</div>
+        <div class="img-desc">Trial Chambersに近いスタイルで再設計</div>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-title">🏰 Stronghold（ストロングホールド）</div>
+        <p style="font-size:0.87em; color:var(--muted);">バニラの<strong style="color:var(--red)">約7倍</strong>に拡大。VindicatorやEvokerが大量に出現し、Portal Roomを守っています。内部には<strong>Sculk Lab</strong>などの隠し部屋も。松明でルートをマークしながら進むのがおすすめです。</p>
+        <div class="warn" style="margin-top:10px;"><strong>⚠️</strong> Portal Roomは毎回異なる構造が生成されます。</div>
+      </div>
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-title">🌆 End City（エンドシティ）</div>
+        <p style="font-size:0.87em; color:var(--muted);">Trial Chambersに近いスタイルで再設計。<strong style="color:var(--gold)">Ominous Vault</strong>にVoid StrikeやVoid Shotのエンチャント書などの強力なアイテムが入っています。End Shipは引き続き存在し、Elytaが入手できます。</p>
+      </div>
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-title">✨ Altar of The Accursed（アルター・オブ・ザ・アカーセド）</div>
+        <p style="font-size:0.87em; color:var(--muted);">Ender Dragon撃破後に解放される<strong style="color:var(--accent)">最重要クラフト台</strong>です。アイテムを上に投げ込んで操作します。</p>
+        <ul style="margin-top:10px; font-size:0.85em; color:var(--muted); padding-left:16px; line-height:2;">
+          <li>Netherite防具 → Stellarity防具へのアップグレード</li>
+          <li>エンチャントをアイテムから本へ移し替え（Unbinding）</li>
+          <li>Elytaの飛行トレイルのカスタマイズ（16色対応）</li>
+          <li>Satchel of Voidsを使えばどこでも利用可能（CD有）</li>
+        </ul>
+        <div style="margin-top:10px;">
+          <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/b5508050c1b5f43bc891f223605c18a29e4d65a2_350.webp" alt="Altar of The Accursed" style="width:100%; border-radius:8px; max-height:180px; object-fit:cover;" onerror="this.style.display='none'">
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏘️ その他の構造物</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; font-size:0.86em; color:var(--muted);">
+          <div style="flex:1; min-width:180px; padding:10px; background:var(--card2); border-radius:8px;"><strong style="color:var(--text);">End Village（エンドビレッジ）</strong><br>Amethyst Forestなどに生成。End Villagerが住む村。</div>
+          <div style="flex:1; min-width:180px; padding:10px; background:var(--card2); border-radius:8px;"><strong style="color:var(--text);">End Monster Box（エンドモンスターボックス）</strong><br>The End各地に散らばる小型構造物。中身を狙う価値あり。</div>
+          <div style="flex:1; min-width:180px; padding:10px; background:var(--card2); border-radius:8px;"><strong style="color:var(--text);">Desert Ruins（デザートルーインズ）</strong><br>Suspicious SandにDune Speed書などが埋まっている。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ボス -->
+  <section id="bosses">
+    <div class="section-title"><span class="emoji">🐉</span> ボス攻略</div>
+
+    <div class="boss-card">
+      <div class="boss-header">
+        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/747e179b6f0c34961c9a7908e96bbbc1c93d272c_350.webp" alt="Ender Dragon" onerror="this.style.display='none'">
+        <div class="boss-header-text">
+          <h3>Ender Dragon</h3>
+          <div class="kana">エンダードラゴン</div>
+          <div class="boss-stats">
+            <span class="boss-stat hp">❤️ HP：300</span>
+            <span class="boss-stat warn">🛡 追加アーマーポイントあり</span>
+            <span class="boss-stat">🔮 End Crystal残数表示あり</span>
+          </div>
+        </div>
+      </div>
+      <div class="boss-body">
+        <h4>⚔️ 攻略手順</h4>
+        <ol style="font-size:0.88em; color:var(--muted); padding-left:18px; line-height:2.2;">
+          <li>まず全てのEnd Crystalを弓で破壊する</li>
+          <li>Dragon降下時に集中攻撃（接近戦・遠距離どちらも有効）</li>
+          <li>周囲にスポーンするモブにも注意を払う</li>
+        </ol>
+        <h4>🎁 撃破後の報酬</h4>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+          <span class="badge badge-purple">Dragon's Eye（ドラゴンズ・アイ）ドロップ</span>
+          <span class="badge badge-gold">Altar of The Accursed 解放</span>
+        </div>
+        <div class="tip" style="margin-top:12px;"><strong>💡 Dragon's Eye</strong>：Trinketとして持つと周囲のEnder系モブを無害化し、デバフも除去してくれます。超便利！</div>
+      </div>
+    </div>
+
+    <div class="boss-card">
+      <div class="boss-header" style="background: linear-gradient(135deg, #1e1e38, #4a1a1a);">
+        <div class="boss-header-text">
+          <h3 style="color: var(--gold);">Empress of Light</h3>
+          <div class="kana">エンプレス・オブ・ライト</div>
+          <div class="boss-stats">
+            <span class="boss-stat hp">❤️ 非常に高HP</span>
+            <span class="boss-stat warn">☀️ 昼間は超強化 & 追加ドロップ</span>
+            <span class="boss-stat">🎭 Pixie Dustで召喚</span>
+          </div>
+        </div>
+      </div>
+      <div class="boss-body">
+        <h4>📋 基本情報</h4>
+        <p style="font-size:0.87em; color:var(--muted);">Stellarity最強クラスのボス。<strong style="color:var(--gold)">Pixie Dust（ピクシー・ダスト）</strong>を使って召喚します。<br>昼間に倒すと追加攻撃が発動する代わりに、通常より強力なドロップが得られます。</p>
+        <h4>⚔️ 攻略ポイント</h4>
+        <ul style="font-size:0.87em; color:var(--muted); padding-left:16px; line-height:2;">
+          <li>機動力が非常に高いため<strong style="color:var(--text);">遠距離攻撃を主体</strong>にする</li>
+          <li>Jinx・Voided などのデバフに注意</li>
+          <li>Fire Resistance（炎耐性）でPrismatic Infernoを軽減可能</li>
+          <li>初回は夜間チャレンジが安全。慣れたら昼間挑戦で豪華ドロップを狙おう！</li>
+        </ul>
+        <h4>🎁 主なドロップ</h4>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
+          <span class="badge badge-red">Stella（ステラ）</span>
+          <span class="badge badge-gold">昼間討伐で追加ドロップ</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- アイテム -->
+  <section id="items">
+    <div class="section-title"><span class="emoji">🗡️</span> アイテム・装備一覧</div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-title">🛡️ 防具セット（Armor Sets / アーマーセット）</div>
+      <p style="font-size:0.86em; color:var(--muted); margin-bottom:12px;">Altar of The Accursedで作成できる4種類の防具セット。Netherite防具のアップグレード版で、それぞれ役割が異なります。</p>
+      <table>
+        <tr><th>特化</th><th>内容</th></tr>
+        <tr><td><span class="badge badge-blue">防御</span></td><td style="font-size:0.86em; color:var(--muted);">高いArmor・Armor Toughnessでダメージを軽減</td></tr>
+        <tr><td><span class="badge badge-red">攻撃</span></td><td style="font-size:0.86em; color:var(--muted);">ダメージ出力を大幅に強化</td></tr>
+        <tr><td><span class="badge badge-green">機動</span></td><td style="font-size:0.86em; color:var(--muted);">移動速度・空中機動が向上</td></tr>
+        <tr><td><span class="badge badge-purple">特殊</span></td><td style="font-size:0.86em; color:var(--muted);">固有のセットボーナスを持つ4つ目のセット</td></tr>
+      </table>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-title">⚔️ 主要武器（Weapons / ウェポンズ）</div>
+      <p style="font-size:0.86em; color:var(--muted); margin-bottom:12px;">20種類以上の新武器が追加。多くはTerrariaにインスパイアされた固有アクションを持ちます。</p>
+      <table>
+        <tr><th>名前</th><th>特徴</th><th>入手</th></tr>
+        <tr>
+          <td class="name-cell">Stella<span class="kana-small">ステラ</span></td>
+          <td style="font-size:0.84em; color:var(--muted);">チャージで炎の回転攻撃。防具貫通ダメージあり</td>
+          <td><span class="badge badge-red">Empress drop</span></td>
+        </tr>
+        <tr>
+          <td class="name-cell">Dragonblade<span class="kana-small">ドラゴンブレード</span></td>
+          <td style="font-size:0.84em; color:var(--muted);">パンチ攻撃。40%真ダメージでPvPに強い</td>
+          <td><span class="badge badge-purple">Dragon drop</span></td>
+        </tr>
+        <tr>
+          <td class="name-cell">Kaleidoscope<span class="kana-small">カレイドスコープ</span></td>
+          <td style="font-size:0.84em; color:var(--muted);">電撃ダッシュ攻撃。⚠️ Creeperに注意！</td>
+          <td><span class="badge badge-gold">End City</span></td>
+        </tr>
+        <tr>
+          <td class="name-cell">その他20種以上</td>
+          <td style="font-size:0.84em; color:var(--muted);">各武器に固有のアクション・能力あり</td>
+          <td><span class="badge badge-blue">各種入手</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-title">💎 素材（Materials / マテリアルズ）</div>
+      <table>
+        <tr><th>素材名</th><th>入手方法</th></tr>
+        <tr><td class="name-cell">Enderite Shard<span class="kana-small">エンダライト・シャード</span></td><td style="font-size:0.84em; color:var(--muted);">The Endバイオームの採掘</td></tr>
+        <tr><td class="name-cell">Enderite Smithing Template<span class="kana-small">エンダライト・スミシング・テンプレート</span></td><td style="font-size:0.84em; color:var(--muted);">構造物チェスト</td></tr>
+        <tr><td class="name-cell">Hallowed Ingot<span class="kana-small">ハロウド・インゴット</span></td><td style="font-size:0.84em; color:var(--muted);">Altar of The Accursedでクラフト</td></tr>
+        <tr><td class="name-cell">Sand Rune<span class="kana-small">サンド・ルーン</span></td><td style="font-size:0.84em; color:var(--muted);">Desert Ruins</td></tr>
+        <tr><td class="name-cell">Starlight Soot<span class="kana-small">スターライト・スート</span></td><td style="font-size:0.84em; color:var(--muted);">The End内で採集</td></tr>
+        <tr><td class="name-cell">Purpur / Gilded / Winged Key<span class="kana-small">パーパー / ギルデッド / ウィングド・キー</span></td><td style="font-size:0.84em; color:var(--muted);">各種構造物・モブドロップ</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔮 Trinkets（トリンケット）</div>
+      <p style="font-size:0.85em; color:var(--muted); margin-bottom:10px;">持つだけで効果を発揮する特殊アイテムカテゴリです。</p>
+      <table>
+        <tr><th>名前</th><th>効果</th><th>入手</th></tr>
+        <tr><td class="name-cell">Dragon's Eye<span class="kana-small">ドラゴンズ・アイ</span></td><td style="font-size:0.84em; color:var(--muted);">周囲Ender系モブを無害化・デバフ除去</td><td><span class="badge badge-purple">Dragon drop</span></td></tr>
+        <tr><td class="name-cell">Enderman's Hand<span class="kana-small">エンダーマンズ・ハンド</span></td><td style="font-size:0.84em; color:var(--muted);">特殊効果。Looting上昇で入手率UP</td><td><span class="badge badge-blue">Enderman 10%</span></td></tr>
+        <tr><td class="name-cell">Soaring Insignia<span class="kana-small">ソアリング・インシグニア</span></td><td style="font-size:0.84em; color:var(--muted);">飛行関連の能力を強化</td><td><span class="badge badge-gold">探索</span></td></tr>
+        <tr><td class="name-cell">Satchel of Voids<span class="kana-small">サチェル・オブ・ヴォイズ</span></td><td style="font-size:0.84em; color:var(--muted);">AoTAのクラフト機能をどこでも使用可能（CD有）</td><td><span class="badge badge-gold">探索</span></td></tr>
+        <tr><td class="name-cell">Life Crystal<span class="kana-small">ライフ・クリスタル</span></td><td style="font-size:0.84em; color:var(--muted);">体力関連の効果</td><td><span class="badge badge-gold">探索</span></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- モブ -->
+  <section id="mobs">
+    <div class="section-title"><span class="emoji">👾</span> モブ図鑑</div>
+    <table style="margin-bottom:20px;">
+      <tr><th>モブ名</th><th>特徴</th><th>主なドロップ</th></tr>
+      <tr>
+        <td class="name-cell">Voided Zombie<span class="kana-small">ヴォイデッド・ゾンビ</span></td>
+        <td style="font-size:0.84em; color:var(--muted);">攻撃でVoidedデバフ（最大HP-20%）を付与する厄介な敵</td>
+        <td style="font-size:0.84em; color:var(--muted);">通常ゾンビ系</td>
+      </tr>
+      <tr>
+        <td class="name-cell">End Villager<span class="kana-small">エンド・ビレジャー</span></td>
+        <td style="font-size:0.84em; color:var(--muted);">End Villageに住む住人。交易が可能な場合あり</td>
+        <td style="font-size:0.84em; color:var(--muted);">—</td>
+      </tr>
+      <tr>
+        <td class="name-cell">End Chicken<span class="kana-small">エンド・チキン</span></td>
+        <td style="font-size:0.84em; color:var(--muted);">無害な鶏。食料源として活用可能</td>
+        <td style="font-size:0.84em; color:var(--muted);">鶏肉・羽</td>
+      </tr>
+      <tr>
+        <td class="name-cell">Shulking<span class="kana-small">シャルキング</span></td>
+        <td style="font-size:0.84em; color:var(--muted);">Shulkerの変種。End City等に出現する強化版</td>
+        <td style="font-size:0.84em; color:var(--muted);">—</td>
+      </tr>
+    </table>
+    <div class="card">
+      <div class="card-title">🔄 バニラモブの変化</div>
+      <ul style="font-size:0.87em; color:var(--muted); padding-left:16px; line-height:2.2;">
+        <li><strong style="color:var(--text);">Enderman（エンダーマン）</strong>：Overworld版も<strong>Enderman's Handを10%でドロップ</strong>（Looting有効）</li>
+        <li><strong style="color:var(--text);">Ender Dragon（エンダードラゴン）</strong>：HP 300、追加アーマーポイント付き（ボス攻略参照）</li>
+        <li><strong style="color:var(--text);">Phantom（ファントム）</strong>：不眠時にサイズに応じてHP・防御が変動する独自システムあり</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- メカニクス -->
+  <section id="mechanics">
+    <div class="section-title"><span class="emoji">⚙️</span> エンチャント・メカニクス</div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-title">✨ 追加エンチャント（Enchantments / エンチャントメンツ）</div>
+      <table>
+        <tr><th>名前</th><th>効果</th><th>入手</th></tr>
+        <tr><td class="name-cell">Void Strike<span class="kana-small">ヴォイド・ストライク</span></td><td style="font-size:0.84em; color:var(--muted);">攻撃時にVoided I付与（最大HP-20%）</td><td><span class="badge badge-gold">Ominous Vault</span></td></tr>
+        <tr><td class="name-cell">Void Shot<span class="kana-small">ヴォイド・ショット</span></td><td style="font-size:0.84em; color:var(--muted);">矢にVoided I付与</td><td><span class="badge badge-gold">Ominous Vault</span></td></tr>
+        <tr><td class="name-cell">Dune Speed<span class="kana-small">デューン・スピード</span></td><td style="font-size:0.84em; color:var(--muted);">砂系ブロック上での移動速度アップ</td><td><span class="badge badge-blue">Desert Ruins</span></td></tr>
+      </table>
+    </div>
+
+    <div class="mech-card">
+      <div class="mech-title">🪣 Cauldron Crafting <span class="mech-kana">（コールドロン・クラフティング）</span></div>
+      <div class="mech-body">Dragon's Breathの瓶をWater Cauldronに投入すると希釈され、アイテムをCauldronに投げ込む独自クラフトが可能になります。レシピをしっかり確認しておこう！</div>
+    </div>
+
+    <div class="mech-card">
+      <div class="mech-title">🎣 Void Fishing <span class="mech-kana">（ヴォイド・フィッシング）</span></div>
+      <div class="mech-body">The End内で釣り竿を空中（真下のVoidではなく少し上）に垂らすと魚が釣れます。バイオームごとに固有のルートテーブルがあり、新種の魚も入手できます。<strong style="color:var(--text);">Luck of the Sea</strong>は最大Lv.10まで有効！</div>
+    </div>
+
+    <div class="mech-card">
+      <div class="mech-title">🦋 Elytra Trail <span class="mech-kana">（エリトラ・トレイル）</span></div>
+      <div class="mech-body">Elytaで飛行中に独自のトレイルが出現します。Altar of The Accursedで染料を使い16色にカスタマイズ可能。Water Bucketで元に戻せます。</div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div class="card-title">☠️ 独自デバフ一覧</div>
+      <p style="font-size:0.82em; color:var(--muted); margin-bottom:10px;">⚠️ これらのデバフは独自システムのため <code>/effect</code> コマンドでは確認・付与できません。</p>
+      <table>
+        <tr><th>デバフ名</th><th>効果</th><th>対策</th></tr>
+        <tr><td class="name-cell">Jinx<span class="kana-small">ジンクス</span></td><td style="font-size:0.84em; color:var(--muted);">アーマー・タフネスを20%×レベル分減少、Luck低下</td><td style="font-size:0.84em; color:var(--muted);">Dragon's Eye（デバフ除去）</td></tr>
+        <tr><td class="name-cell">Voided<span class="kana-small">ヴォイデッド</span></td><td style="font-size:0.84em; color:var(--muted);">最大HPを20%×レベル分減少（効果終了後に回復）</td><td style="font-size:0.84em; color:var(--muted);">Dragon's Eye（デバフ除去）</td></tr>
+        <tr><td class="name-cell">Prismatic Inferno<span class="kana-small">プリズマティック・インフェルノ</span></td><td style="font-size:0.84em; color:var(--muted);">継続ダメージ（DoT）。Shieldでブロック不可</td><td style="font-size:0.84em; color:var(--muted);">Fire Resistanceで軽減</td></tr>
+      </table>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>このガイドは随時更新中です。情報の追記・修正を歓迎します 🌌</p>
+  <p style="margin-top:6px;">参考：<a href="https://koharasbasement.wiki.gg/wiki/Stellarity" target="_blank">kohara's Basement Wiki</a> ／ <a href="https://modrinth.com/datapack/stellarity" target="_blank">Modrinth（Stellarity公式）</a></p>
+</footer>
+
+</body>
+</html>
