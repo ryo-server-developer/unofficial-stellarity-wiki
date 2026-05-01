@@ -2,7 +2,7 @@
 
 データパック企画で使用している [Stellarityの公式Wiki](https://koharasbasement.wiki.gg/wiki/Stellarity) の情報を日本語に要約した非公式なWikiです。AIによって要約されているので、不足していたり、誤った情報が記載されていることがあります。あくまで補助として利用してください。
 
-URL: `https://ryo-server-developer.github.io/stellarity-wiki/`
+URL: https://ryo-server-developer.github.io/unofficial-stellarity-wiki/
 
 ## ディレクトリ構成
 
