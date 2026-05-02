@@ -3,621 +3,583 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stellarity 攻略ガイド</title>
+<title>Stellarity 攻略ガイド 完全版（画像復元）</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
-  :root {
-    --bg: #0d0d1a;
-    --card: #161628;
-    --card2: #1e1e38;
-    --accent: #a78bfa;
-    --accent2: #818cf8;
-    --gold: #fbbf24;
-    --green: #34d399;
-    --red: #f87171;
-    --blue: #60a5fa;
-    --text: #e2e8f0;
-    --muted: #94a3b8;
-    --border: #2d2d5a;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans JP', sans-serif; line-height: 1.7; }
-
-  /* ヘッダー */
-  header {
-    background: linear-gradient(135deg, #0d0d1a 0%, #1a1040 50%, #0d0d1a 100%);
-    border-bottom: 2px solid var(--accent);
-    padding: 40px 20px 30px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦';
-    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-    color: var(--accent); opacity: 0.3; font-size: 12px; white-space: nowrap;
-  }
-  header h1 { font-size: 2.8em; font-weight: 900; background: linear-gradient(90deg, var(--accent), var(--blue), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  header p { color: var(--muted); margin-top: 8px; font-size: 0.95em; }
-  .header-img { width: 100%; max-width: 700px; border-radius: 12px; margin: 20px auto 0; display: block; border: 2px solid var(--border); object-fit: cover; max-height: 280px; }
-
-  /* ナビ */
-  nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 20px; position: sticky; top: 0; z-index: 100; display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
-  nav a { color: var(--accent); text-decoration: none; font-size: 0.85em; padding: 5px 12px; border: 1px solid var(--border); border-radius: 20px; transition: all 0.2s; }
-  nav a:hover { background: var(--accent); color: #0d0d1a; }
-
-  /* レイアウト */
-  .container { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
-
-  /* セクション */
-  section { margin-bottom: 50px; }
-  .section-title {
-    font-size: 1.6em; font-weight: 900; margin-bottom: 20px;
-    padding: 12px 20px; border-radius: 10px;
-    background: linear-gradient(90deg, var(--card2), transparent);
-    border-left: 4px solid var(--accent);
-    display: flex; align-items: center; gap: 10px;
-  }
-  .section-title .emoji { font-size: 1.2em; }
-
-  /* カード */
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
-  .card-title { font-weight: 700; font-size: 1.1em; color: var(--accent); margin-bottom: 8px; }
-  .card-sub { font-size: 0.82em; color: var(--muted); }
-
-  /* グリッド */
-  .grid2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-  .grid3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
-
-  /* 画像カード */
-  .img-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-  .img-card img { width: 100%; height: 160px; object-fit: cover; display: block; }
-  .img-card .img-label { padding: 10px 14px; font-size: 0.88em; font-weight: 700; color: var(--accent); }
-  .img-card .img-desc { padding: 0 14px 12px; font-size: 0.82em; color: var(--muted); }
-
-  /* バイオームカード */
-  .biome-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 16px; position: relative; overflow: hidden;
-  }
-  .biome-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-  .biome-fields::before { background: linear-gradient(90deg, #34d399, #6ee7b7); }
-  .biome-barrens::before { background: linear-gradient(90deg, #f87171, #fca5a5); }
-  .biome-forests::before { background: linear-gradient(90deg, #a78bfa, #c4b5fd); }
-  .biome-frozen::before { background: linear-gradient(90deg, #60a5fa, #93c5fd); }
-  .biome-name { font-weight: 700; font-size: 1em; color: var(--text); }
-  .biome-kana { font-size: 0.78em; color: var(--muted); margin-bottom: 6px; }
-  .biome-desc { font-size: 0.84em; color: var(--muted); margin-bottom: 8px; }
-  .danger-bar { display: flex; gap: 3px; align-items: center; }
-  .danger-bar span { font-size: 0.75em; color: var(--muted); margin-right: 4px; }
-  .star { font-size: 0.9em; }
-  .star.on { color: var(--gold); }
-  .star.off { color: #2d2d5a; }
-
-  /* ボスカード */
-  .boss-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
-  .boss-header { background: linear-gradient(135deg, #1e1e38, #2d1b4e); padding: 20px; display: flex; gap: 16px; align-items: flex-start; }
-  .boss-header img { width: 280px; height: 160px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-  .boss-header-text h3 { font-size: 1.3em; font-weight: 900; color: var(--accent); }
-  .boss-header-text .kana { font-size: 0.82em; color: var(--muted); }
-  .boss-stats { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-  .boss-stat { background: rgba(255,255,255,0.07); border-radius: 6px; padding: 4px 10px; font-size: 0.82em; }
-  .boss-stat.hp { color: var(--red); }
-  .boss-stat.warn { color: var(--gold); }
-  .boss-body { padding: 20px; }
-  .boss-body h4 { font-size: 0.95em; font-weight: 700; color: var(--accent2); margin: 14px 0 6px; }
-
-  /* テーブル */
-  table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
-  th { background: var(--card2); color: var(--accent); padding: 10px 14px; text-align: left; font-size: 0.85em; }
-  td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  .name-cell { font-weight: 700; }
-  .kana-small { display: block; font-size: 0.78em; color: var(--muted); font-weight: 400; }
-
-  /* バッジ */
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.75em; font-weight: 700; }
-  .badge-purple { background: rgba(167,139,250,0.2); color: var(--accent); border: 1px solid rgba(167,139,250,0.4); }
-  .badge-green { background: rgba(52,211,153,0.2); color: var(--green); border: 1px solid rgba(52,211,153,0.4); }
-  .badge-red { background: rgba(248,113,113,0.2); color: var(--red); border: 1px solid rgba(248,113,113,0.4); }
-  .badge-blue { background: rgba(96,165,250,0.2); color: var(--blue); border: 1px solid rgba(96,165,250,0.4); }
-  .badge-gold { background: rgba(251,191,36,0.2); color: var(--gold); border: 1px solid rgba(251,191,36,0.4); }
-
-  /* チップス */
-  .tip { background: rgba(167,139,250,0.1); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0; font-size: 0.88em; }
-  .tip strong { color: var(--accent); }
-  .warn { background: rgba(251,191,36,0.08); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 12px 0; font-size: 0.88em; }
-  .warn strong { color: var(--gold); }
-
-  /* 準備チェック */
-  .checklist { list-style: none; }
-  .checklist li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.92em; display: flex; gap: 10px; align-items: flex-start; }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist li::before { content: '◆'; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
-
-  /* メカニクスカード */
-  .mech-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
-  .mech-title { font-weight: 700; font-size: 1.05em; color: var(--gold); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-  .mech-kana { font-size: 0.8em; color: var(--muted); font-weight: 400; }
-  .mech-body { font-size: 0.88em; color: var(--muted); }
-
-  /* カテゴリラベル */
-  .cat-label { font-size: 0.8em; font-weight: 700; padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 12px; }
-  .cat-fields { background: rgba(52,211,153,0.15); color: var(--green); }
-  .cat-barrens { background: rgba(248,113,113,0.15); color: var(--red); }
-  .cat-forests { background: rgba(167,139,250,0.15); color: var(--accent); }
-  .cat-frozen { background: rgba(96,165,250,0.15); color: var(--blue); }
-
-  /* フッター */
-  footer { text-align: center; padding: 30px; color: var(--muted); font-size: 0.82em; border-top: 1px solid var(--border); }
-  footer a { color: var(--accent); text-decoration: none; }
-
-  @media (max-width: 600px) {
-    header h1 { font-size: 2em; }
-    .boss-header { flex-direction: column; }
-    .boss-header img { width: 100%; }
-  }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+:root{--bg:#0d0d1a;--card:#161628;--card2:#1e1e38;--accent:#a78bfa;--accent2:#818cf8;--gold:#fbbf24;--green:#34d399;--red:#f87171;--blue:#60a5fa;--text:#e2e8f0;--muted:#94a3b8;--border:#2d2d5a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;line-height:1.7;font-size:14px;}
+header{background:linear-gradient(135deg,#0d0d1a 0%,#1a1040 50%,#0d0d1a 100%);border-bottom:2px solid var(--accent);padding:36px 20px 24px;text-align:center;}
+header h1{font-size:2.2em;font-weight:900;background:linear-gradient(90deg,var(--accent),var(--blue),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+header p{color:var(--muted);margin-top:6px;font-size:.9em;}
+nav{background:var(--card);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;gap:5px;flex-wrap:wrap;justify-content:center;position:sticky;top:0;z-index:100;}
+.nb{background:transparent;color:var(--accent);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:.8em;cursor:pointer;font-family:inherit;transition:all .2s;}
+.nb.on,.nb:hover{background:var(--accent);color:#0d0d1a;}
+.wrap{max-width:960px;margin:0 auto;padding:26px 16px;}
+.sec{display:none;}
+.sec.on{display:block;}
+.st{font-size:1.5em;font-weight:900;padding:10px 18px;border-radius:10px;background:linear-gradient(90deg,var(--card2),transparent);border-left:4px solid var(--accent);display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+.ct{font-weight:700;font-size:1.05em;color:var(--accent);margin-bottom:8px;}
+.g2{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.g3{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;}
+.mu{color:var(--muted);font-size:.87em;}
+.ir{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;}
+.ii{width:64px;height:64px;object-fit:contain;image-rendering:pixelated;border-radius:6px;background:var(--card2);border:1px solid var(--border);flex-shrink:0;}
+.ip{width:64px;height:64px;border-radius:6px;background:var(--card2);border:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--border);font-size:1.2em;}
+.inf{flex:1;}
+.in{font-weight:900;font-size:1em;}
+.ik{font-size:.76em;color:var(--muted);margin-bottom:5px;}
+.id{font-size:.84em;color:var(--muted);line-height:1.6;}
+.ab{background:rgba(167,139,250,.07);border-radius:6px;padding:6px 10px;margin-top:6px;font-size:.83em;color:var(--muted);}
+.ab strong{color:var(--accent2);}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.72em;font-weight:700;margin:2px;}
+.bp{background:rgba(167,139,250,.2);color:var(--accent);border:1px solid rgba(167,139,250,.4);}
+.bg{background:rgba(52,211,153,.2);color:var(--green);border:1px solid rgba(52,211,153,.4);}
+.br{background:rgba(248,113,113,.2);color:var(--red);border:1px solid rgba(248,113,113,.4);}
+.bb{background:rgba(96,165,250,.2);color:var(--blue);border:1px solid rgba(96,165,250,.4);}
+.bo{background:rgba(251,191,36,.2);color:var(--gold);border:1px solid rgba(251,191,36,.4);}
+.tip{background:rgba(167,139,250,.1);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:.85em;}
+.tip strong{color:var(--accent);}
+.wb{background:rgba(251,191,36,.08);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:.85em;}
+.wb strong{color:var(--gold);}
+.ac{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.ah{padding:14px 18px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;}
+.abody{padding:14px 18px;}
+.as{font-size:.84em;color:var(--muted);margin-bottom:4px;}
+.bonb{background:rgba(167,139,250,.1);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin-top:10px;font-size:.84em;}
+.crb{background:rgba(251,191,36,.08);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;margin-top:8px;font-size:.83em;color:var(--muted);}
+.bc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;}
+.ic{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.ic img{width:100%;height:140px;object-fit:cover;display:block;}
+.il{padding:8px 12px;font-size:.85em;font-weight:700;color:var(--accent);}
+.id2{padding:0 12px 10px;font-size:.8em;color:var(--muted);}
+.bh{background:linear-gradient(135deg,var(--card2),#2d1b4e);padding:18px;display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;}
+.bh img{width:220px;height:130px;object-fit:cover;border-radius:8px;flex-shrink:0;}
+table{width:100%;border-collapse:collapse;font-size:.85em;}
+th{background:var(--card2);color:var(--accent);padding:8px 12px;text-align:left;font-size:.82em;}
+td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+.subt{font-size:.82em;font-weight:700;color:var(--accent2);margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.cl{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.8em;font-weight:700;margin-bottom:10px;}
+.ci{border-bottom:1px solid var(--border);padding:8px 0;display:flex;gap:8px;font-size:.88em;}
+.ci::before{content:"◆";color:var(--accent);flex-shrink:0;}
+footer{text-align:center;padding:28px;color:var(--muted);font-size:.82em;border-top:1px solid var(--border);}
+footer a{color:var(--accent);text-decoration:none;}
+@media(max-width:600px){header h1{font-size:1.7em;}.bh img{width:100%;}}
 </style>
 </head>
 <body>
-
 <header>
-  <h1>🌌 Stellarity 攻略ガイド</h1>
-  <p>Minecraft The End リワークデータパック 非公式日本語攻略</p>
-  <img class="header-img"
-    src="https://cdn.modrinth.com/data/bZgeDzN8/images/e352acc6e3ae3b8259b5c27553e00400c2c17b94_350.webp"
-    alt="Stellarity The Hallow バイオーム"
-    onerror="this.style.display='none'">
+  <h1>🌌 Stellarity 攻略ガイド 完全版</h1>
+  <p>Minecraft The End リワークデータパック 非公式日本語攻略（画像復元・完全データ補完）</p>
 </header>
-
-<nav>
-  <a href="#overview">📖 概要</a>
-  <a href="#beginner">⚔️ 序盤</a>
-  <a href="#biomes">🌿 バイオーム</a>
-  <a href="#structures">🏰 構造物</a>
-  <a href="#bosses">🐉 ボス</a>
-  <a href="#items">🗡️ アイテム</a>
-  <a href="#mobs">👾 モブ</a>
-  <a href="#mechanics">⚙️ メカニクス</a>
-</nav>
-
-<div class="container">
-
-  <!-- 概要 -->
-  <section id="overview">
-    <div class="section-title"><span class="emoji">📖</span> Stellarityとは</div>
-    <div class="card">
-      <p>StellarityはMinecraftのThe Endを根本から作り直すデータパックです。ライトとダークの魔法・幻想をテーマに、全く新しい地形・バイオーム・アイテム・ボスが追加されます。</p>
-      <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
-        <span class="badge badge-purple">23種 バイオーム</span>
-        <span class="badge badge-gold">40種以上 アイテム</span>
-        <span class="badge badge-red">強化ボス2体</span>
-        <span class="badge badge-green">新メカニクス多数</span>
-        <span class="badge badge-blue">Minecraft 1.21対応</span>
-      </div>
-    </div>
-    <div class="grid3" style="margin-top:16px;">
-      <div class="img-card">
-        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/cb882152fc274a9f62893618d873569dfb429575_350.webp" alt="バイオーム" onerror="this.style.background:'#1e1e38'">
-        <div class="img-label">多彩なバイオーム</div>
-        <div class="img-desc">End Highlands など23種類のバイオームが生成</div>
-      </div>
-      <div class="img-card">
-        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/b5dec8f98df7200694e90ff3e6922239308d9940_350.webp" alt="Stronghold" onerror="this.style.background:'#1e1e38'">
-        <div class="img-label">巨大Stronghold</div>
-        <div class="img-desc">バニラの約7倍の規模に拡張、Illagerが守る</div>
-      </div>
-      <div class="img-card">
-        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/e24c7e81fbfb30ea442596fd98b6207e5031d4a9_350.webp" alt="メカニクス" onerror="this.style.background:'#1e1e38'">
-        <div class="img-label">独自メカニクス</div>
-        <div class="img-desc">Void FishingやBreath Craftingなど固有システム</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 序盤 -->
-  <section id="beginner">
-    <div class="section-title"><span class="emoji">⚔️</span> 序盤の進め方</div>
-
-    <div class="card">
-      <div class="card-title">🎒 The Endへ入る前の準備</div>
-      <p style="font-size:0.88em; color:var(--muted); margin-bottom:12px;">Stellarityのモブ・バイオームはバニラより大幅に強化されています。万全の準備で挑みましょう。</p>
-      <ul class="checklist">
-        <li><strong>装備</strong>：フルNetherite推奨。Protection IVとFeather Falling IVは必須級</li>
-        <li><strong>食料</strong>：十分な量を持参。The EndからOverworldへの帰還は困難</li>
-        <li><strong>弓 &amp; 矢</strong>：Infinity enchant または大量の矢（Crystal破壊に必須）</li>
-        <li><strong>炎耐性ポーション</strong>：Evoker対策。Empress of Light戦でも有効</li>
-        <li><strong>松明・マーカー</strong>：Strongholdは巨大で迷いやすい</li>
-      </ul>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <div class="card-title">🏰 Stronghold（ストロングホールド）攻略</div>
-        <p style="font-size:0.85em; color:var(--muted);">バニラの約7倍の規模。IllagerたちがEnd Portalを死守しています。</p>
-        <div class="tip" style="margin-top:10px;"><strong>💡 Tip</strong>：内部にSculk Labなどの隠し部屋が存在します。隅々まで探索しましょう！</div>
-        <div class="warn"><strong>⚠️ 注意</strong>：すべてのPortal Roomが同じ構造ではありません。</div>
-      </div>
-      <div class="card">
-        <div class="card-title">🌀 The Endに入ったら最初にやること</div>
-        <ul class="checklist">
-          <li>周囲のバイオームと地形を把握する</li>
-          <li>Prismarine Forestなど安全なバイオームに拠点を構える</li>
-          <li>Ender Dragon撃破前に十分なアイテムを集める</li>
-          <li>Dragon撃破後にAltar of The Accursedが解放されることを頭に入れておく</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- バイオーム -->
-  <section id="biomes">
-    <div class="section-title"><span class="emoji">🌿</span> バイオーム攻略</div>
-
-    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
-      <span class="badge badge-green">Fields：平原系</span>
-      <span class="badge badge-red">Barrens：荒地系</span>
-      <span class="badge badge-purple">Forests：森林系</span>
-      <span class="badge badge-blue">Frozen：凍結系</span>
-    </div>
-
-    <div class="grid2" style="margin-bottom:16px;">
-      <div class="img-card">
-        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/b77957d0f75bfb1484e0f5d27fa01ade76217d45_350.webp" alt="各種バイオーム" onerror="this.style.background:'#1e1e38'">
-        <div class="img-label">バイオームの多様性</div>
-        <div class="img-desc">沼地・ツンドラ・砂漠・森など様々な環境が広がる</div>
-      </div>
-      <div class="img-card">
-        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/97fc666fdf09e8dd360de20066937b7b62e030f8_350.webp" alt="凍結バイオーム" onerror="this.style.background:'#1e1e38'">
-        <div class="img-label">Frozen Spikes</div>
-        <div class="img-desc">凍結バイオームの一例。左にEnd Barrensも見える</div>
-      </div>
-    </div>
-
-    <div class="cat-label cat-fields">🟢 Fields（フィールズ）</div>
-    <div class="grid2" style="margin-bottom:20px;">
-      <div class="biome-card biome-fields">
-        <div class="biome-name">The Hallow</div>
-        <div class="biome-kana">ザ・ハロウ</div>
-        <div class="biome-desc">明るく幻想的な外観。Terrariaにインスパイアされたバイオーム。比較的安全で探索しやすい。</div>
-        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span><span class="star off">★</span></div>
-      </div>
-      <div class="biome-card biome-fields">
-        <div class="biome-name">End Midlands / End Wilds</div>
-        <div class="biome-kana">エンド・ミッドランズ / エンド・ワイルズ</div>
-        <div class="biome-desc">開けた地形で視界が良好。バニラのEnd感が残る中間的なバイオーム。</div>
-        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span><span class="star off">★</span></div>
-      </div>
-    </div>
-
-    <div class="cat-label cat-barrens">🔴 Barrens（バレンズ）</div>
-    <div class="grid2" style="margin-bottom:20px;">
-      <div class="biome-card biome-barrens">
-        <div class="biome-name">End Barrens</div>
-        <div class="biome-kana">エンド・バレンズ</div>
-        <div class="biome-desc">高い丘が特徴的な荒地。高所からの落下は死を招くため要注意。</div>
-        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span></div>
-      </div>
-      <div class="biome-card biome-barrens">
-        <div class="biome-name">Ashfall Deltas</div>
-        <div class="biome-kana">アッシュフォール・デルタス</div>
-        <div class="biome-desc">火山灰が漂う荒廃した三角州地帯。水路が複雑に入り組んでいる。</div>
-        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span></div>
-      </div>
-      <div class="biome-card biome-barrens">
-        <div class="biome-name">Flesh Tundra</div>
-        <div class="biome-kana">フレッシュ・ツンドラ</div>
-        <div class="biome-desc">肉質のブロックで構成されたおぞましいツンドラ。名前の由来は見れば分かる…。</div>
-        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span></div>
-      </div>
-      <div class="biome-card biome-barrens">
-        <div class="biome-name">Crystal Crags / The Nest</div>
-        <div class="biome-kana">クリスタル・クラッグス / ザ・ネスト</div>
-        <div class="biome-desc">結晶の岩山や巣穴状の地形。見た目は美しいが危険な生き物が潜む。</div>
-        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span></div>
-      </div>
-    </div>
-
-    <div class="cat-label cat-forests">🟣 Forests（フォレスツ）</div>
-    <div class="grid2" style="margin-bottom:20px;">
-      <div class="biome-card biome-forests">
-        <div class="biome-name">Amethyst Forest</div>
-        <div class="biome-kana">アメジスト・フォレスト</div>
-        <div class="biome-desc">アメジストの結晶が輝く幻想的な森。End Villageが生成されることもある。</div>
-        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span><span class="star off">★</span></div>
-      </div>
-      <div class="biome-card biome-forests">
-        <div class="biome-name">Prismarine Forest</div>
-        <div class="biome-kana">プリズマリン・フォレスト</div>
-        <div class="biome-desc">⭐ 敵対モブがスポーンしない安全地帯！緊急避難や拠点候補として最適。</div>
-        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span><span class="star off">★</span><span class="star off">★</span></div>
-      </div>
-      <div class="biome-card biome-forests">
-        <div class="biome-name">Warped Marsh</div>
-        <div class="biome-kana">ワープド・マーシュ</div>
-        <div class="biome-desc">歪んだ植生の沼地。視界が悪く方向感覚を失いやすい。強敵が潜む。</div>
-        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span></div>
-      </div>
-    </div>
-
-    <div class="cat-label cat-frozen">🔵 Frozen（フローズン）</div>
-    <div class="grid2">
-      <div class="biome-card biome-frozen">
-        <div class="biome-name">Frozen Spikes / その他Frozen系</div>
-        <div class="biome-kana">フローズン・スパイクス</div>
-        <div class="biome-desc">既存バイオームの凍結バリアント。白を基調とした暗い色合い。通常版より強化された敵が出現することがある。</div>
-        <div class="danger-bar"><span>危険度</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star off">★</span><span class="star off">★</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 構造物 -->
-  <section id="structures">
-    <div class="section-title"><span class="emoji">🏰</span> 構造物攻略</div>
-    <div class="grid2">
-      <div class="img-card">
-        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/f1f258c0824c58bae454e25748927851b74aa165_350.webp" alt="Stronghold inside" onerror="this.style.background:'#1e1e38'">
-        <div class="img-label">Stronghold（内部）</div>
-        <div class="img-desc">MASSIVE。これが全てを物語る</div>
-      </div>
-      <div class="img-card">
-        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/c8b0e739d4325a761b53a82c0129b411cc7c2541_350.webp" alt="End City" onerror="this.style.background:'#1e1e38'">
-        <div class="img-label">End City（リワーク版）</div>
-        <div class="img-desc">Trial Chambersに近いスタイルで再設計</div>
-      </div>
-    </div>
-    <div style="margin-top:16px;">
-      <div class="card" style="margin-bottom:12px;">
-        <div class="card-title">🏰 Stronghold（ストロングホールド）</div>
-        <p style="font-size:0.87em; color:var(--muted);">バニラの<strong style="color:var(--red)">約7倍</strong>に拡大。VindicatorやEvokerが大量に出現し、Portal Roomを守っています。内部には<strong>Sculk Lab</strong>などの隠し部屋も。松明でルートをマークしながら進むのがおすすめです。</p>
-        <div class="warn" style="margin-top:10px;"><strong>⚠️</strong> Portal Roomは毎回異なる構造が生成されます。</div>
-      </div>
-      <div class="card" style="margin-bottom:12px;">
-        <div class="card-title">🌆 End City（エンドシティ）</div>
-        <p style="font-size:0.87em; color:var(--muted);">Trial Chambersに近いスタイルで再設計。<strong style="color:var(--gold)">Ominous Vault</strong>にVoid StrikeやVoid Shotのエンチャント書などの強力なアイテムが入っています。End Shipは引き続き存在し、Elytaが入手できます。</p>
-      </div>
-      <div class="card" style="margin-bottom:12px;">
-        <div class="card-title">✨ Altar of The Accursed（アルター・オブ・ザ・アカーセド）</div>
-        <p style="font-size:0.87em; color:var(--muted);">Ender Dragon撃破後に解放される<strong style="color:var(--accent)">最重要クラフト台</strong>です。アイテムを上に投げ込んで操作します。</p>
-        <ul style="margin-top:10px; font-size:0.85em; color:var(--muted); padding-left:16px; line-height:2;">
-          <li>Netherite防具 → Stellarity防具へのアップグレード</li>
-          <li>エンチャントをアイテムから本へ移し替え（Unbinding）</li>
-          <li>Elytaの飛行トレイルのカスタマイズ（16色対応）</li>
-          <li>Satchel of Voidsを使えばどこでも利用可能（CD有）</li>
-        </ul>
-        <div style="margin-top:10px;">
-          <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/b5508050c1b5f43bc891f223605c18a29e4d65a2_350.webp" alt="Altar of The Accursed" style="width:100%; border-radius:8px; max-height:180px; object-fit:cover;" onerror="this.style.display='none'">
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">🏘️ その他の構造物</div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; font-size:0.86em; color:var(--muted);">
-          <div style="flex:1; min-width:180px; padding:10px; background:var(--card2); border-radius:8px;"><strong style="color:var(--text);">End Village（エンドビレッジ）</strong><br>Amethyst Forestなどに生成。End Villagerが住む村。</div>
-          <div style="flex:1; min-width:180px; padding:10px; background:var(--card2); border-radius:8px;"><strong style="color:var(--text);">End Monster Box（エンドモンスターボックス）</strong><br>The End各地に散らばる小型構造物。中身を狙う価値あり。</div>
-          <div style="flex:1; min-width:180px; padding:10px; background:var(--card2); border-radius:8px;"><strong style="color:var(--text);">Desert Ruins（デザートルーインズ）</strong><br>Suspicious SandにDune Speed書などが埋まっている。</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ボス -->
-  <section id="bosses">
-    <div class="section-title"><span class="emoji">🐉</span> ボス攻略</div>
-
-    <div class="boss-card">
-      <div class="boss-header">
-        <img src="https://cdn.modrinth.com/data/bZgeDzN8/images/747e179b6f0c34961c9a7908e96bbbc1c93d272c_350.webp" alt="Ender Dragon" onerror="this.style.display='none'">
-        <div class="boss-header-text">
-          <h3>Ender Dragon</h3>
-          <div class="kana">エンダードラゴン</div>
-          <div class="boss-stats">
-            <span class="boss-stat hp">❤️ HP：300</span>
-            <span class="boss-stat warn">🛡 追加アーマーポイントあり</span>
-            <span class="boss-stat">🔮 End Crystal残数表示あり</span>
-          </div>
-        </div>
-      </div>
-      <div class="boss-body">
-        <h4>⚔️ 攻略手順</h4>
-        <ol style="font-size:0.88em; color:var(--muted); padding-left:18px; line-height:2.2;">
-          <li>まず全てのEnd Crystalを弓で破壊する</li>
-          <li>Dragon降下時に集中攻撃（接近戦・遠距離どちらも有効）</li>
-          <li>周囲にスポーンするモブにも注意を払う</li>
-        </ol>
-        <h4>🎁 撃破後の報酬</h4>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
-          <span class="badge badge-purple">Dragon's Eye（ドラゴンズ・アイ）ドロップ</span>
-          <span class="badge badge-gold">Altar of The Accursed 解放</span>
-        </div>
-        <div class="tip" style="margin-top:12px;"><strong>💡 Dragon's Eye</strong>：Trinketとして持つと周囲のEnder系モブを無害化し、デバフも除去してくれます。超便利！</div>
-      </div>
-    </div>
-
-    <div class="boss-card">
-      <div class="boss-header" style="background: linear-gradient(135deg, #1e1e38, #4a1a1a);">
-        <div class="boss-header-text">
-          <h3 style="color: var(--gold);">Empress of Light</h3>
-          <div class="kana">エンプレス・オブ・ライト</div>
-          <div class="boss-stats">
-            <span class="boss-stat hp">❤️ 非常に高HP</span>
-            <span class="boss-stat warn">☀️ 昼間は超強化 & 追加ドロップ</span>
-            <span class="boss-stat">🎭 Pixie Dustで召喚</span>
-          </div>
-        </div>
-      </div>
-      <div class="boss-body">
-        <h4>📋 基本情報</h4>
-        <p style="font-size:0.87em; color:var(--muted);">Stellarity最強クラスのボス。<strong style="color:var(--gold)">Pixie Dust（ピクシー・ダスト）</strong>を使って召喚します。<br>昼間に倒すと追加攻撃が発動する代わりに、通常より強力なドロップが得られます。</p>
-        <h4>⚔️ 攻略ポイント</h4>
-        <ul style="font-size:0.87em; color:var(--muted); padding-left:16px; line-height:2;">
-          <li>機動力が非常に高いため<strong style="color:var(--text);">遠距離攻撃を主体</strong>にする</li>
-          <li>Jinx・Voided などのデバフに注意</li>
-          <li>Fire Resistance（炎耐性）でPrismatic Infernoを軽減可能</li>
-          <li>初回は夜間チャレンジが安全。慣れたら昼間挑戦で豪華ドロップを狙おう！</li>
-        </ul>
-        <h4>🎁 主なドロップ</h4>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;">
-          <span class="badge badge-red">Stella（ステラ）</span>
-          <span class="badge badge-gold">昼間討伐で追加ドロップ</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- アイテム -->
-  <section id="items">
-    <div class="section-title"><span class="emoji">🗡️</span> アイテム・装備一覧</div>
-
-    <div class="card" style="margin-bottom:20px;">
-      <div class="card-title">🛡️ 防具セット（Armor Sets / アーマーセット）</div>
-      <p style="font-size:0.86em; color:var(--muted); margin-bottom:12px;">Altar of The Accursedで作成できる4種類の防具セット。Netherite防具のアップグレード版で、それぞれ役割が異なります。</p>
-      <table>
-        <tr><th>特化</th><th>内容</th></tr>
-        <tr><td><span class="badge badge-blue">防御</span></td><td style="font-size:0.86em; color:var(--muted);">高いArmor・Armor Toughnessでダメージを軽減</td></tr>
-        <tr><td><span class="badge badge-red">攻撃</span></td><td style="font-size:0.86em; color:var(--muted);">ダメージ出力を大幅に強化</td></tr>
-        <tr><td><span class="badge badge-green">機動</span></td><td style="font-size:0.86em; color:var(--muted);">移動速度・空中機動が向上</td></tr>
-        <tr><td><span class="badge badge-purple">特殊</span></td><td style="font-size:0.86em; color:var(--muted);">固有のセットボーナスを持つ4つ目のセット</td></tr>
-      </table>
-    </div>
-
-    <div class="card" style="margin-bottom:20px;">
-      <div class="card-title">⚔️ 主要武器（Weapons / ウェポンズ）</div>
-      <p style="font-size:0.86em; color:var(--muted); margin-bottom:12px;">20種類以上の新武器が追加。多くはTerrariaにインスパイアされた固有アクションを持ちます。</p>
-      <table>
-        <tr><th>名前</th><th>特徴</th><th>入手</th></tr>
-        <tr>
-          <td class="name-cell">Stella<span class="kana-small">ステラ</span></td>
-          <td style="font-size:0.84em; color:var(--muted);">チャージで炎の回転攻撃。防具貫通ダメージあり</td>
-          <td><span class="badge badge-red">Empress drop</span></td>
-        </tr>
-        <tr>
-          <td class="name-cell">Dragonblade<span class="kana-small">ドラゴンブレード</span></td>
-          <td style="font-size:0.84em; color:var(--muted);">パンチ攻撃。40%真ダメージでPvPに強い</td>
-          <td><span class="badge badge-purple">Dragon drop</span></td>
-        </tr>
-        <tr>
-          <td class="name-cell">Kaleidoscope<span class="kana-small">カレイドスコープ</span></td>
-          <td style="font-size:0.84em; color:var(--muted);">電撃ダッシュ攻撃。⚠️ Creeperに注意！</td>
-          <td><span class="badge badge-gold">End City</span></td>
-        </tr>
-        <tr>
-          <td class="name-cell">その他20種以上</td>
-          <td style="font-size:0.84em; color:var(--muted);">各武器に固有のアクション・能力あり</td>
-          <td><span class="badge badge-blue">各種入手</span></td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="card" style="margin-bottom:20px;">
-      <div class="card-title">💎 素材（Materials / マテリアルズ）</div>
-      <table>
-        <tr><th>素材名</th><th>入手方法</th></tr>
-        <tr><td class="name-cell">Enderite Shard<span class="kana-small">エンダライト・シャード</span></td><td style="font-size:0.84em; color:var(--muted);">The Endバイオームの採掘</td></tr>
-        <tr><td class="name-cell">Enderite Smithing Template<span class="kana-small">エンダライト・スミシング・テンプレート</span></td><td style="font-size:0.84em; color:var(--muted);">構造物チェスト</td></tr>
-        <tr><td class="name-cell">Hallowed Ingot<span class="kana-small">ハロウド・インゴット</span></td><td style="font-size:0.84em; color:var(--muted);">Altar of The Accursedでクラフト</td></tr>
-        <tr><td class="name-cell">Sand Rune<span class="kana-small">サンド・ルーン</span></td><td style="font-size:0.84em; color:var(--muted);">Desert Ruins</td></tr>
-        <tr><td class="name-cell">Starlight Soot<span class="kana-small">スターライト・スート</span></td><td style="font-size:0.84em; color:var(--muted);">The End内で採集</td></tr>
-        <tr><td class="name-cell">Purpur / Gilded / Winged Key<span class="kana-small">パーパー / ギルデッド / ウィングド・キー</span></td><td style="font-size:0.84em; color:var(--muted);">各種構造物・モブドロップ</td></tr>
-      </table>
-    </div>
-
-    <div class="card">
-      <div class="card-title">🔮 Trinkets（トリンケット）</div>
-      <p style="font-size:0.85em; color:var(--muted); margin-bottom:10px;">持つだけで効果を発揮する特殊アイテムカテゴリです。</p>
-      <table>
-        <tr><th>名前</th><th>効果</th><th>入手</th></tr>
-        <tr><td class="name-cell">Dragon's Eye<span class="kana-small">ドラゴンズ・アイ</span></td><td style="font-size:0.84em; color:var(--muted);">周囲Ender系モブを無害化・デバフ除去</td><td><span class="badge badge-purple">Dragon drop</span></td></tr>
-        <tr><td class="name-cell">Enderman's Hand<span class="kana-small">エンダーマンズ・ハンド</span></td><td style="font-size:0.84em; color:var(--muted);">特殊効果。Looting上昇で入手率UP</td><td><span class="badge badge-blue">Enderman 10%</span></td></tr>
-        <tr><td class="name-cell">Soaring Insignia<span class="kana-small">ソアリング・インシグニア</span></td><td style="font-size:0.84em; color:var(--muted);">飛行関連の能力を強化</td><td><span class="badge badge-gold">探索</span></td></tr>
-        <tr><td class="name-cell">Satchel of Voids<span class="kana-small">サチェル・オブ・ヴォイズ</span></td><td style="font-size:0.84em; color:var(--muted);">AoTAのクラフト機能をどこでも使用可能（CD有）</td><td><span class="badge badge-gold">探索</span></td></tr>
-        <tr><td class="name-cell">Life Crystal<span class="kana-small">ライフ・クリスタル</span></td><td style="font-size:0.84em; color:var(--muted);">体力関連の効果</td><td><span class="badge badge-gold">探索</span></td></tr>
-      </table>
-    </div>
-  </section>
-
-  <!-- モブ -->
-  <section id="mobs">
-    <div class="section-title"><span class="emoji">👾</span> モブ図鑑</div>
-    <table style="margin-bottom:20px;">
-      <tr><th>モブ名</th><th>特徴</th><th>主なドロップ</th></tr>
-      <tr>
-        <td class="name-cell">Voided Zombie<span class="kana-small">ヴォイデッド・ゾンビ</span></td>
-        <td style="font-size:0.84em; color:var(--muted);">攻撃でVoidedデバフ（最大HP-20%）を付与する厄介な敵</td>
-        <td style="font-size:0.84em; color:var(--muted);">通常ゾンビ系</td>
-      </tr>
-      <tr>
-        <td class="name-cell">End Villager<span class="kana-small">エンド・ビレジャー</span></td>
-        <td style="font-size:0.84em; color:var(--muted);">End Villageに住む住人。交易が可能な場合あり</td>
-        <td style="font-size:0.84em; color:var(--muted);">—</td>
-      </tr>
-      <tr>
-        <td class="name-cell">End Chicken<span class="kana-small">エンド・チキン</span></td>
-        <td style="font-size:0.84em; color:var(--muted);">無害な鶏。食料源として活用可能</td>
-        <td style="font-size:0.84em; color:var(--muted);">鶏肉・羽</td>
-      </tr>
-      <tr>
-        <td class="name-cell">Shulking<span class="kana-small">シャルキング</span></td>
-        <td style="font-size:0.84em; color:var(--muted);">Shulkerの変種。End City等に出現する強化版</td>
-        <td style="font-size:0.84em; color:var(--muted);">—</td>
-      </tr>
-    </table>
-    <div class="card">
-      <div class="card-title">🔄 バニラモブの変化</div>
-      <ul style="font-size:0.87em; color:var(--muted); padding-left:16px; line-height:2.2;">
-        <li><strong style="color:var(--text);">Enderman（エンダーマン）</strong>：Overworld版も<strong>Enderman's Handを10%でドロップ</strong>（Looting有効）</li>
-        <li><strong style="color:var(--text);">Ender Dragon（エンダードラゴン）</strong>：HP 300、追加アーマーポイント付き（ボス攻略参照）</li>
-        <li><strong style="color:var(--text);">Phantom（ファントム）</strong>：不眠時にサイズに応じてHP・防御が変動する独自システムあり</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- メカニクス -->
-  <section id="mechanics">
-    <div class="section-title"><span class="emoji">⚙️</span> エンチャント・メカニクス</div>
-
-    <div class="card" style="margin-bottom:20px;">
-      <div class="card-title">✨ 追加エンチャント（Enchantments / エンチャントメンツ）</div>
-      <table>
-        <tr><th>名前</th><th>効果</th><th>入手</th></tr>
-        <tr><td class="name-cell">Void Strike<span class="kana-small">ヴォイド・ストライク</span></td><td style="font-size:0.84em; color:var(--muted);">攻撃時にVoided I付与（最大HP-20%）</td><td><span class="badge badge-gold">Ominous Vault</span></td></tr>
-        <tr><td class="name-cell">Void Shot<span class="kana-small">ヴォイド・ショット</span></td><td style="font-size:0.84em; color:var(--muted);">矢にVoided I付与</td><td><span class="badge badge-gold">Ominous Vault</span></td></tr>
-        <tr><td class="name-cell">Dune Speed<span class="kana-small">デューン・スピード</span></td><td style="font-size:0.84em; color:var(--muted);">砂系ブロック上での移動速度アップ</td><td><span class="badge badge-blue">Desert Ruins</span></td></tr>
-      </table>
-    </div>
-
-    <div class="mech-card">
-      <div class="mech-title">🪣 Cauldron Crafting <span class="mech-kana">（コールドロン・クラフティング）</span></div>
-      <div class="mech-body">Dragon's Breathの瓶をWater Cauldronに投入すると希釈され、アイテムをCauldronに投げ込む独自クラフトが可能になります。レシピをしっかり確認しておこう！</div>
-    </div>
-
-    <div class="mech-card">
-      <div class="mech-title">🎣 Void Fishing <span class="mech-kana">（ヴォイド・フィッシング）</span></div>
-      <div class="mech-body">The End内で釣り竿を空中（真下のVoidではなく少し上）に垂らすと魚が釣れます。バイオームごとに固有のルートテーブルがあり、新種の魚も入手できます。<strong style="color:var(--text);">Luck of the Sea</strong>は最大Lv.10まで有効！</div>
-    </div>
-
-    <div class="mech-card">
-      <div class="mech-title">🦋 Elytra Trail <span class="mech-kana">（エリトラ・トレイル）</span></div>
-      <div class="mech-body">Elytaで飛行中に独自のトレイルが出現します。Altar of The Accursedで染料を使い16色にカスタマイズ可能。Water Bucketで元に戻せます。</div>
-    </div>
-
-    <div class="card" style="margin-top:20px;">
-      <div class="card-title">☠️ 独自デバフ一覧</div>
-      <p style="font-size:0.82em; color:var(--muted); margin-bottom:10px;">⚠️ これらのデバフは独自システムのため <code>/effect</code> コマンドでは確認・付与できません。</p>
-      <table>
-        <tr><th>デバフ名</th><th>効果</th><th>対策</th></tr>
-        <tr><td class="name-cell">Jinx<span class="kana-small">ジンクス</span></td><td style="font-size:0.84em; color:var(--muted);">アーマー・タフネスを20%×レベル分減少、Luck低下</td><td style="font-size:0.84em; color:var(--muted);">Dragon's Eye（デバフ除去）</td></tr>
-        <tr><td class="name-cell">Voided<span class="kana-small">ヴォイデッド</span></td><td style="font-size:0.84em; color:var(--muted);">最大HPを20%×レベル分減少（効果終了後に回復）</td><td style="font-size:0.84em; color:var(--muted);">Dragon's Eye（デバフ除去）</td></tr>
-        <tr><td class="name-cell">Prismatic Inferno<span class="kana-small">プリズマティック・インフェルノ</span></td><td style="font-size:0.84em; color:var(--muted);">継続ダメージ（DoT）。Shieldでブロック不可</td><td style="font-size:0.84em; color:var(--muted);">Fire Resistanceで軽減</td></tr>
-      </table>
-    </div>
-  </section>
-
-</div>
-
+<nav id="nav"></nav>
+<div class="wrap" id="main"></div>
 <footer>
-  <p>このガイドは随時更新中です。情報の追記・修正を歓迎します 🌌</p>
-  <p style="margin-top:6px;">参考：<a href="https://koharasbasement.wiki.gg/wiki/Stellarity" target="_blank">kohara's Basement Wiki</a> ／ <a href="https://modrinth.com/datapack/stellarity" target="_blank">Modrinth（Stellarity公式）</a></p>
+  <p>このガイドは随時更新中です 🌌</p>
+  <p style="margin-top:6px;">参考：<a href="https://koharasbasement.wiki.gg/wiki/Stellarity" target="_blank">kohara's Basement Wiki</a> ／ <a href="https://modrinth.com/datapack/stellarity" target="_blank">Modrinth（公式）</a></p>
 </footer>
+<script>
+// アイコンURL
+var IMGS = {
+  "Champion_Armor":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Champion_Helmet.png/32px-Invicon_Champion_Helmet.png",
+  "Hallowed_Armor":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Hallowed_Helmet.png/32px-Invicon_Hallowed_Helmet.png",
+  "Shulker_Armor":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Shulker_Helmet.png/32px-Invicon_Shulker_Helmet.png",
+  "Floral_Armor":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Floral_Helmet.png/32px-Invicon_Floral_Helmet.png",
+  "Dragon_Wings":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Dragon_Wings.png/32px-Invicon_Dragon_Wings.png",
+  "Empress_Wings":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Empress_Wings.png/32px-Invicon_Empress_Wings.png",
+  "Phantom_Mantle":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Phantom_Mantle.png/32px-Invicon_Phantom_Mantle.png",
+  "Phantom_Wings_item":"https://koharasbasement.wiki.gg/images/Invicon_Phantom_Wings.png",
+  "Dragonblade":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Dragonblade_2.png/32px-Invicon_Dragonblade_2.png",
+  "Tamaris":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Tamaris.png/32px-Invicon_Tamaris.png",
+  "Harvester":"https://koharasbasement.wiki.gg/images/Invicon_Harvester_Tier_0.png",
+  "The_Beginning_and_The_End":"https://koharasbasement.wiki.gg/images/thumb/Invicon_The_Beginning.png/32px-Invicon_The_Beginning.png",
+  "Stella":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Stella.png/32px-Invicon_Stella.png",
+  "Kaleidoscope":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Kaleidoscope.png/32px-Invicon_Kaleidoscope.png",
+  "Starless_Scythe":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Starless_Scythe.png/32px-Invicon_Starless_Scythe.png",
+  "Prismember":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Prismember.png/32px-Invicon_Prismember.png",
+  "Sabrewing":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Sabrewing.png/32px-Invicon_Sabrewing.png",
+  "Sariel":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Sariel.png/32px-Invicon_Sariel.png",
+  "Zephyr":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Zephyr.png/32px-Invicon_Zephyr.png",
+  "Stellar_Striker":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Stellar_Striker.png/32px-Invicon_Stellar_Striker.png",
+  "Dragon_s_Eye":"https://koharasbasement.wiki.gg/images/Invicon_Dragons_eye_no_anim.png",
+  "Enderman_s_Hand":"https://koharasbasement.wiki.gg/images/Invicon_Endermans_Hand.png",
+  "Soaring_Insignia":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Soaring_Insignia.png/32px-Invicon_Soaring_Insignia.png",
+  "Satchel_of_Voids":"https://koharasbasement.wiki.gg/images/Invicon_Porta_Altar.png",
+  "Life_Crystal":"https://koharasbasement.wiki.gg/images/Invicon_Ender_insignia_no_anim.png",
+  "Duskberry":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Duskberry.png/32px-Invicon_Duskberry.png",
+  "Book_of_Jinx":"https://koharasbasement.wiki.gg/images/Invicon_Book_Of_Jinx.png",
+  "Tome_of_Return":"https://koharasbasement.wiki.gg/images/Invicon_Book_Of_Return.png",
+  "Grand_Tome_of_Teleportation":"https://koharasbasement.wiki.gg/images/Invicon_Book_Of_Conveyance.png",
+  "Crest_of_The_End":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Crest_of_the_end.png/13px-Invicon_Crest_of_the_end.png",
+  "Prismatic_Pearl":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Prismatic_Pearl.png/32px-Invicon_Prismatic_Pearl.png",
+  "Book_of_Light":"https://koharasbasement.wiki.gg/images/Invicon_Book_Of_Light.png",
+  "Book_of_Obstruct":"https://koharasbasement.wiki.gg/images/Invicon_Book_Of_Obstruct.png",
+  "Book_of_Updraft":"https://koharasbasement.wiki.gg/images/Invicon_Book_Of_Updraft.png",
+  "Copper_Elektra_Shield":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Copper_Elektra_Shield.png/32px-Invicon_Copper_Elektra_Shield.png",
+  "Starstruck_Shield":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Starstruck_Shield.png/32px-Invicon_Starstruck_Shield.png",
+  "Phantom_Item_Frame":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Phantom_Item_Frame.png/32px-Invicon_Phantom_Item_Frame.png",
+  "Voided_Zombie":"https://koharasbasement.wiki.gg/images/thumb/Voided_Zombie.png/300px-Voided_Zombie.png",
+  "End_Villager":"https://koharasbasement.wiki.gg/images/thumb/Invicon_End_Villager.png/32px-Invicon_End_Villager.png",
+  "End_Chicken":"https://koharasbasement.wiki.gg/images/thumb/Invicon_End_Chicken.png/32px-Invicon_End_Chicken.png",
+  "Empress_of_Light":"https://koharasbasement.wiki.gg/images/thumb/Empress_of_Light.png/300px-Empress_of_Light.png",
+  "Shulking":"https://koharasbasement.wiki.gg/images/Invicon_Shulker_Box.png",
+  "Ender_Dragon":"https://koharasbasement.wiki.gg/images/Invicon_Dragon_Head.png",
+  "Enderman":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Enderman.png/32px-Invicon_Enderman.png",
+  "Phantom":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Phantom.png/32px-Invicon_Phantom.png",
+  "Stray":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Stray.png/32px-Invicon_Stray.png",
+  "Piglin":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Piglin.png/32px-Invicon_Piglin.png",
+  "Void_Strike":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Void_Strike.png/32px-Invicon_Void_Strike.png",
+  "Void_Shot":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Void_Shot.png/32px-Invicon_Void_Shot.png",
+  "Dune_Speed":"https://koharasbasement.wiki.gg/images/thumb/Invicon_Dune_Speed.png/32px-Invicon_Dune_Speed.png"
+};
+var MR = {
+  hallow:"https://cdn.modrinth.com/data/bZgeDzN8/images/e352acc6e3ae3b8259b5c27553e00400c2c17b94_350.webp",
+  strong:"https://cdn.modrinth.com/data/bZgeDzN8/images/b5dec8f98df7200694e90ff3e6922239308d9940_350.webp",
+  strongS:"https://cdn.modrinth.com/data/bZgeDzN8/images/f1f258c0824c58bae454e25748927851b74aa165_350.webp",
+  aota:"https://cdn.modrinth.com/data/bZgeDzN8/images/b5508050c1b5f43bc891f223605c18a29e4d65a2_350.webp",
+  endcity:"https://cdn.modrinth.com/data/bZgeDzN8/images/c8b0e739d4325a761b53a82c0129b411cc7c2541_350.webp",
+  dragon:"https://cdn.modrinth.com/data/bZgeDzN8/images/747e179b6f0c34961c9a7908e96bbbc1c93d272c_350.webp",
+  biomes1:"https://cdn.modrinth.com/data/bZgeDzN8/images/cb882152fc274a9f62893618d873569dfb429575_350.webp",
+  biomes2:"https://cdn.modrinth.com/data/bZgeDzN8/images/b77957d0f75bfb1484e0f5d27fa01ade76217d45_350.webp",
+  frozen:"https://cdn.modrinth.com/data/bZgeDzN8/images/97fc666fdf09e8dd360de20066937b7b62e030f8_350.webp",
+  mechs:"https://cdn.modrinth.com/data/bZgeDzN8/images/e24c7e81fbfb30ea442596fd98b6207e5031d4a9_350.webp"
+};
 
+function img(key, sz) {
+  sz = sz || "64px";
+  var src = IMGS[key];
+  if (!src) return '<div class="ip" style="width:'+sz+';height:'+sz+';">?</div>';
+  return '<img src="'+src+'" class="ii" style="width:'+sz+';height:'+sz+';image-rendering:pixelated;" onerror="this.style.opacity=0" alt="">';
+}
+function icard(src, lbl, desc) {
+  return '<div class="ic"><img src="'+src+'" onerror="this.style.display=\'none\'" alt="'+lbl+'"><div class="il">'+lbl+'</div><div class="id2">'+desc+'</div></div>';
+}
+function b(c, t) { return '<span class="badge '+c+'">'+t+'</span>'; }
+function tip(t) { return '<div class="tip">'+t+'</div>'; }
+function wb(t) { return '<div class="wb">'+t+'</div>'; }
+function stars(n) { return "★".repeat(n)+"☆".repeat(5-n); }
+function row(key, name, kana, desc, tags, ability) {
+  tags = tags || ""; ability = ability || "";
+  return '<div class="ir">'+img(key)+'<div class="inf"><div class="in">'+name+'</div><div class="ik">'+kana+'</div><div class="id">'+desc+'</div>'+(ability?'<div class="ab"><strong>✨ アビリティ：</strong>'+ability+'</div>':'')+'<div style="margin-top:6px;">'+tags+'</div></div></div>';
+}
+
+// ── セクション定義 ──────────────────────────────
+function secOverview() {
+  return '<div class="st"><span>📖</span> Stellarityとは</div>'
+  +'<div class="card"><p style="margin-bottom:12px;">StellarityはMinecraftのThe Endを根本から作り直すデータパックです。ライトとダークの魔法・幻想をテーマに、全く新しい地形・バイオーム・アイテム・ボスが追加されます。</p>'+b("bp","23種 バイオーム")+b("bo","40種以上 アイテム")+b("br","強化ボス2体")+b("bg","新メカニクス多数")+b("bb","Minecraft 1.21対応")+'</div>'
+  +'<div class="g3">'+icard(MR.biomes1,"多彩なバイオーム","23種類の新バイオームが生成")+icard(MR.strong,"巨大Stronghold","バニラの約7倍の規模")+icard(MR.mechs,"独自メカニクス","Void Fishing、Cauldron Craftingなど")+'</div>';
+}
+
+function secBeginner() {
+  var checks = [["装備","フルNetherite推奨。Protection IVとFeather Falling IVは必須級"],["食料","十分な量を持参。The EndからOverworldへの帰還は困難"],["弓 & 矢","Infinity enchant または大量の矢（Crystal破壊に必須）"],["炎耐性ポーション","Evoker対策。Empress of Light戦でも有効"],["松明・マーカー","Strongholdは巨大で迷いやすい"]];
+  var steps = ["周囲のバイオームと地形を把握する","Prismarine Forestなど安全な場所に拠点を構える","Dragon撃破後にAltar of The Accursedが解放されることを覚えておく"];
+  return '<div class="st"><span>⚔️</span> 序盤の進め方</div>'
+  +'<div class="card"><div class="ct">🎒 The Endへ入る前の準備</div>'+checks.map(function(x){return '<div class="ci"><strong>'+x[0]+'：</strong>'+x[1]+'</div>';}).join('')+'</div>'
+  +'<div class="g2"><div class="card"><div class="ct">🏰 Stronghold攻略ポイント</div><p class="mu">バニラの約7倍の規模。VindicatorやEvokerが大量出現。Portal Roomは毎回異なる構造。</p>'+tip('<strong>💡</strong> 内部にSculk Labなどの隠し部屋が存在します。')+'</div>'
+  +'<div class="card"><div class="ct">🌀 The Endに入ったら</div>'+steps.map(function(t){return '<div class="ci">'+t+'</div>';}).join('')+'</div></div>';
+}
+
+function secBiomes() {
+  var groups = [
+    {label:"🟢 Fields（フィールズ）",color:"#34d399",bg:"rgba(52,211,153,.15)",items:[
+      {n:"The Hallow",k:"ザ・ハロウ",d:"明るく幻想的。Terrariaインスパイア。比較的安全。",s:2},
+      {n:"End Midlands / End Wilds",k:"エンド・ミッドランズ / エンド・ワイルズ",d:"開けた地形で視界良好。",s:2}]},
+    {label:"🔴 Barrens（バレンズ）",color:"#f87171",bg:"rgba(248,113,113,.15)",items:[
+      {n:"End Barrens",k:"エンド・バレンズ",d:"高い丘が特徴。落下死注意。",s:3},
+      {n:"Ashfall Deltas",k:"アッシュフォール・デルタス",d:"火山灰が漂う荒廃した三角州。",s:3},
+      {n:"Flesh Tundra",k:"フレッシュ・ツンドラ",d:"肉質ブロックで構成。Piglinが出没。",s:4},
+      {n:"Crystal Crags / The Nest",k:"クリスタル・クラッグス / ザ・ネスト",d:"結晶の岩山・巣穴地形。強敵多数。",s:3}]},
+    {label:"🟣 Forests（フォレスツ）",color:"#a78bfa",bg:"rgba(167,139,250,.15)",items:[
+      {n:"Amethyst Forest",k:"アメジスト・フォレスト",d:"アメジストの結晶が輝く森。End Villageが生成されることも。",s:2},
+      {n:"Prismarine Forest",k:"プリズマリン・フォレスト",d:"⭐ 敵対モブがスポーンしない安全地帯！拠点候補に最適。",s:1},
+      {n:"Warped Marsh",k:"ワープド・マーシュ",d:"歪んだ沼地。視界が悪い。",s:3}]},
+    {label:"🔵 Frozen（フローズン）",color:"#60a5fa",bg:"rgba(96,165,250,.15)",items:[
+      {n:"Frozen Spikes / 他Frozen系",k:"フローズン・スパイクス",d:"凍結バリアント。StrayがHarvesterをドロップすることがある。",s:3}]}
+  ];
+  var html = '<div class="st"><span>🌿</span> バイオーム攻略</div>'
+    +'<div class="g2">'+icard(MR.biomes2,"バイオームの多様性","沼地・ツンドラ・砂漠・森など様々な環境")+icard(MR.frozen,"Frozen Spikes","凍結バイオームの一例")+'</div>';
+  groups.forEach(function(g) {
+    html += '<span class="cl" style="background:'+g.bg+';color:'+g.color+';">'+g.label+'</span>'
+      +'<div class="g2" style="margin-bottom:18px;">'
+      +g.items.map(function(bi){
+        return '<div class="bc" style="border-top:3px solid '+g.color+';">'
+          +'<div style="font-weight:700;">'+bi.n+'</div>'
+          +'<div style="font-size:.76em;color:var(--muted);margin-bottom:5px;">'+bi.k+'</div>'
+          +'<div style="font-size:.84em;color:var(--muted);margin-bottom:6px;">'+bi.d+'</div>'
+          +'<div style="font-size:.8em;color:var(--gold);">危険度 '+stars(bi.s)+'</div>'
+          +'</div>';
+      }).join('')+'</div>';
+  });
+  return html;
+}
+
+function secStructures() {
+  return '<div class="st"><span>🏰</span> 構造物攻略</div>'
+  +'<div class="g2">'+icard(MR.strongS,"Stronghold（内部）","MASSIVE。これが全てを物語る")+icard(MR.endcity,"End City（リワーク版）","Trial Chambersスタイルで再設計")+'</div>'
+  +'<div class="card"><div class="ct">🏰 Stronghold（ストロングホールド）</div><p class="mu">バニラの約<strong style="color:var(--red);">7倍</strong>の規模。VindicatorがPortal Roomを死守。内部にSculk Labなどの隠し部屋あり。Portal Roomは毎回異なる構造。松明でルートマーキング推奨。</p></div>'
+  +'<div class="card"><div class="ct">🌆 End City（エンドシティ）</div><p class="mu"><strong style="color:var(--gold);">Ominous Vault</strong>にVoid Strike・Void Shotエンチャント書などの強力アイテムが入っています。End Shipは引き続き存在しElyta入手可能。Hallowed Armorのピースも50〜66%の確率でチェストに出現。</p></div>'
+  +'<div class="card"><div class="ct">✨ Altar of The Accursed（アルター・オブ・ザ・アカーセド）</div><p class="mu">Ender Dragon撃破後に解放される<strong style="color:var(--accent);">最重要クラフト台</strong>。Dragonbladeが刺さった形で中央島に生成。アイテムを上に投げ込んで操作する。</p><img src="'+MR.aota+'" onerror="this.style.display=\'none\'" style="width:100%;border-radius:8px;max-height:160px;object-fit:cover;margin-top:10px;" alt="AoTA"></div>'
+  +'<div class="card"><div class="ct">🏘️ その他の構造物</div><p class="mu" style="margin-bottom:6px;">End Village：Amethyst Forestなどに生成。End Villagerが住む村。</p><p class="mu" style="margin-bottom:6px;">End Monster Box：The End各地に散らばる小型構造物。</p><p class="mu">Desert Ruins：Suspicious SandにDune Speedエンチャント書が埋まっている。</p></div>';
+}
+
+function secBosses() {
+  return '<div class="st"><span>🐉</span> ボス攻略</div>'
+  +'<div class="card" style="padding:0;overflow:hidden;margin-bottom:20px;">'
+  +'<div class="bh"><img src="'+MR.dragon+'" onerror="this.style.display=\'none\'" alt="Ender Dragon">'
+  +'<div><div style="font-weight:900;font-size:1.3em;color:var(--accent);">Ender Dragon</div><div style="font-size:.8em;color:var(--muted);">エンダードラゴン</div><div style="margin-top:8px;">'+b("br","❤️ HP：300")+b("bo","🛡 追加アーマーポイント")+b("bb","🔮 Crystal残数表示あり")+'</div></div></div>'
+  +'<div style="padding:18px;"><div class="subt">⚔️ 攻略手順</div><ol class="mu" style="padding-left:18px;line-height:2.2;"><li>まず全てのEnd Crystalを弓で破壊する</li><li>Dragon降下時に集中攻撃（近接・遠距離どちらも有効）</li><li>周囲にスポーンするモブにも注意を払う</li></ol>'
+  +'<div class="subt">🎁 撃破後の報酬</div>'+b("bp","Dragonblade（Altarに出現）")+b("bb","Dragon Wings（20%）")+b("bo","Dragon's Eye（Trinket）")+b("br","Altar of The Accursed 解放")
+  +tip('<strong>💡 Dragon Wings</strong>：Armor +6、Toughness +2の代わりに移動速度-8%。耐久度+50。')+'</div></div>'
+  +'<div class="card" style="padding:0;overflow:hidden;">'
+  +'<div class="bh" style="background:linear-gradient(135deg,var(--card2),#4a1a1a);">'
+  +'<img src="https://koharasbasement.wiki.gg/images/thumb/Empress_of_Light.png/300px-Empress_of_Light.png" onerror="this.style.display=\'none\'" style="width:140px;height:140px;object-fit:contain;border-radius:8px;flex-shrink:0;image-rendering:pixelated;" alt="Empress of Light">'
+  +'<div><div style="font-weight:900;font-size:1.3em;color:var(--gold);">Empress of Light</div><div style="font-size:.8em;color:var(--muted);">エンプレス・オブ・ライト</div><div style="margin-top:8px;">'+b("br","❤️ 非常に高HP")+b("bo","☀️ 昼間は超強化＆追加ドロップ")+b("bp","🎭 Pixie Dustで召喚")+'</div></div></div>'
+  +'<div style="padding:18px;"><p class="mu" style="margin-bottom:10px;"><strong style="color:var(--gold);">Pixie Dust</strong>を使って召喚。昼間に倒すと追加攻撃が発動するが、より強力なドロップが得られる。夜間の方が難易度は低め。</p>'
+  +'<div class="subt">⚔️ 攻略ポイント</div><ul class="mu" style="padding-left:18px;line-height:2;"><li>機動力が非常に高いため<strong style="color:var(--text);">遠距離攻撃を主体</strong>にする</li><li>Jinx・Voidedなどのデバフに注意</li><li>Fire ResistanceでPrismatic Infernoを軽減可能</li><li>Shieldでは<strong style="color:var(--red);">Prismatic Infernoはブロックできない</strong></li></ul>'
+  +'<div class="subt">🎁 主なドロップ</div>'+b("br","Stella（夜間）")+b("bo","Empress Wings（昼間10%）")+'</div></div>';
+}
+
+function secArmor() {
+  var sets = [
+    {key:"Champion_Armor",name:"Champion Armor",kana:"チャンピオン・アーマー",color:"#f87171",focus:"攻撃力・連続攻撃強化",
+     stats:["各パーツ：攻撃力+10%","耐久度：Diamond Armor相当（要注意）"],
+     craft:"Chorus Plating × 4 + Enderite Smithing Template + 各Netherite防具 → AoTA",
+     bonus:"フルセット：連続攻撃スタック。攻撃ごとに次ダメージ+6%、最大5スタック（合計+40%）。スタックはヒット音のピッチで確認可能。",
+     tipText:"Duskberry（Trinket）のダメージ・攻撃速度ボーナスと組み合わせると非常に強力なビルドに。"},
+    {key:"Hallowed_Armor",name:"Hallowed Armor",kana:"ハロウド・アーマー",color:"#fbbf24",focus:"機動性・回避特化",
+     stats:["ヘルメット＆チェスト：安全落下距離+1","レギンス：ジャンプ力+15%、スニーク速度+25%","ブーツ：移動速度+10%、ステップ高さ+0.5（フェンスを走り越えられる）"],
+     craft:"Hallowed Ingot × 4 + Enderite Smithing Template + 各Netherite防具 → AoTA（またはEnd Cityチェスト）",
+     bonus:"フルセット：Holy Protection — 攻撃を回避できる（CD：20秒）。被ダメージ時にFire Resistance(7s)、Water Breathing(7s)も付与。",
+     tipText:"DuskberryとSwiftness Potionとの組み合わせがEmpress of Light戦で特に有効。"},
+    {key:"Shulker_Armor",name:"Shulker Armor",kana:"シャルカー・アーマー",color:"#60a5fa",focus:"防御・反撃特化",
+     stats:["移動速度：-10%（デメリット）","Levitation・Wither完全免疫"],
+     craft:"Shulker Shells × 4 + Enderite Smithing Template + 各Netherite防具 → AoTA",
+     bonus:"フルセット：被ダメージ時50%でShulker Bullet×最大3発召喚（ダメージ4 + Levitation II 5秒）。周囲4体以上のモブがいる場合にResistance I発動（20%軽減）。",
+     warnText:"マルチ時：召喚されたShulker Bulletが味方プレイヤーに当たる可能性あり。"},
+    {key:"Floral_Armor",name:"Floral Armor",kana:"フローラル・アーマー",color:"#34d399",focus:"回復・サポート特化",
+     stats:["回復・サポート系の固有ステータス"],
+     craft:"Cherry Leaves × 8 + Enderite Smithing Template + 各Netherite防具 → AoTA",
+     bonus:"フルセット：固有の回復・サポート系ボーナス。詳細は公式Wikiを参照。"}
+  ];
+  var elytras = [
+    {key:"Dragon_Wings",name:"Dragon Wings",kana:"ドラゴン・ウィングス",drop:"Ender Dragon 20%",stat:"Armor +6, Toughness +2, 移動速度-8%, 耐久度+50"},
+    {key:"Empress_Wings",name:"Empress Wings",kana:"エンプレス・ウィングス",drop:"Empress of Light 昼間10%",stat:"Armor -1, 移動速度+12%。機動性特化。"},
+    {key:"Phantom_Mantle",name:"Phantom Mantle",kana:"ファントム・マントル",drop:"The Endのphantom 2.5%（Looting+1%）",stat:"耐久度-200。特殊効果あり。"},
+    {key:"Phantom_Wings_item",name:"Phantom Wings",kana:"ファントム・ウィングス",drop:"エンチャント（Elytra専用）",stat:"Lv.3以上でArmor Toughness +1。レベルが上がるごとに飛行距離がわずかに減少するトレードオフあり。"}
+  ];
+  var html = '<div class="st"><span>🛡️</span> 防具（Armor Sets）詳細</div>'
+    +'<p class="mu" style="margin-bottom:18px;">全てAltar of The Accursedで作成するNetherite防具のアップグレードです。アーマートリムはアップグレード後も引き継がれます。</p>';
+  sets.forEach(function(s) {
+    html += '<div class="ac" style="border-top:3px solid '+s.color+';">'
+      +'<div class="ah">'+img(s.key,"72px")+'<div><div style="font-weight:900;font-size:1.1em;color:'+s.color+';">'+s.name+'</div><div style="font-size:.78em;color:var(--muted);">'+s.kana+'</div><span class="badge bp" style="margin-top:4px;">🎯 '+s.focus+'</span></div></div>'
+      +'<div class="abody">'+s.stats.map(function(st){return '<div class="as">📈 '+st+'</div>';}).join('')
+      +'<div class="bonb"><strong style="color:var(--accent);">🌟 フルセットボーナス：</strong>'+s.bonus+'</div>'
+      +'<div class="crb"><strong style="color:var(--gold);">📋 素材：</strong>'+s.craft+'</div>'
+      +(s.tipText?tip('<strong>💡</strong> '+s.tipText):'')
+      +(s.warnText?wb('<strong>⚠️</strong> '+s.warnText):'')
+      +'</div></div>';
+  });
+  html += '<div class="card"><div class="ct">🦋 Elytraバリアント（エリトラ・バリアント）</div>'
+    +'<table><thead><tr><th></th><th>名前</th><th>入手</th><th>ステータス変化</th></tr></thead><tbody>'
+    +elytras.map(function(e){return '<tr><td>'+img(e.key,"48px")+'</td><td><strong>'+e.name+'</strong><br><span style="font-size:.78em;color:var(--muted);">'+e.kana+'</span></td><td class="mu">'+e.drop+'</td><td class="mu">'+e.stat+'</td></tr>';}).join('')
+    +'</tbody></table>'+tip('<strong>💡 Elytaトレイル</strong>：AoTAで染料を組み合わせると飛行トレイルを16色にカスタマイズ可能。Water Bucketで解除。')+'</div>';
+  return html;
+}
+
+function secWeapons() {
+  var weapons = [
+    {key:"Dragonblade",name:"Dragonblade",kana:"ドラゴンブレード",desc:"Dragon撃破後にAltarに刺さった状態で出現。右クリックで入手できる<strong style='color:var(--gold);'>1世界1本</strong>の希少剣。破壊不可（Mending・Unbreaking不要）。",ability:"Dragon Stacks：敵を3回攻撃するとStackが溜まる（16秒でリセット）。Stack3でスニーク→強力なパンチ攻撃。パンチダメージの40%は真ダメージ（Protectionエンチャント無視）でPvPに特に有効。壁に叩きつけるとダメージ24に倍増！",tags:b("bp","AoTAから入手（1世界1本）")+b("bo","破壊不可")+b("bb","全Sword enchant対応")},
+    {key:"Tamaris",name:"Tamaris",kana:"タマリス",desc:"クラフト：Netherite Sword + Wither Skeleton Skull + Enderite Shard×8 + Template。",ability:"Execute：HP25%以下の敵の頭上にグレーマークが出現。スニーク少し→最寄りの「マーク付き」敵に瞬間移動して即死（範囲10ブロック）。ボス系モブは閾値10%。⚠️ マルチでは味方を誤Executeする危険あり！",tags:b("bp","AoTAクラフト")+b("bb","全Sword enchant対応")},
+    {key:"Harvester",name:"Harvester",kana:"ハーベスター（旧名：Frigid Harvester）",desc:"モブを倒すたびに永続ダメージ上昇。最大ダメージ達成で破壊不可になる。所持中は移動速度低下（Swiftness Potionで解消）。",ability:"アビリティ解放：Blaze＆Magma Cube→Frostburn / Wither Skeleton→Embrittlement / Breeze→Arctic Wind（9ブロック範囲スロウ）/ Witch＆Vindicator→Piercing Cold（25%アーマー貫通）/ Iron Golem,Shulker,Piglin Brute→Frost Barrier",tags:b("bb","Frozen系Stray 1% / Frozen Crate")+b("br","Sharpness・Fire Aspect不可")},
+    {key:"The_Beginning_and_The_End",name:"The Beginning and The End",kana:"ザ・ビギニング・アンド・ザ・エンド",desc:"2本1セットのダガー。オフハンド効果：Beginning→ダメージ+1、End→速度+5%。",ability:"Spirit Teleport：どちらかを持って攻撃すると50%でSpirit（光球）を召喚。もう1本を逆の手に持ちSpritを0.5秒視点に合わせると最大70ブロック先にテレポート＆短時間攻撃バフ。探索や高低差の移動にも非常に便利！",tags:b("bo","End City Ominous Vault / Ender Crate")+b("bb","全Sword enchant対応（重複効果あり）")},
+    {key:"Stella",name:"Stella",kana:"ステラ",desc:"Empress of Lightが落とすスピン系の剣。<strong style='color:var(--red);'>Sharpnessはスピン攻撃ダメージに影響しない</strong>ためSmite等を優先。",ability:"Prismatic Spin：スニーク長押しでチャージ→炎の回転攻撃。防具貫通ダメージ付き。攻撃後にPrismatic Infernoを付与。",tags:b("br","Empress of Light（夜間）ドロップ")},
+    {key:"Kaleidoscope",name:"Kaleidoscope",kana:"カレイドスコープ",desc:"Illagerが落とす実験的失敗作的武器。破壊不可の4アイテムのひとつ。",ability:"電撃ダッシュ：スニーク+右クリックで全方向に電撃ダッシュ。通過した全モブにダメージ。<strong style='color:var(--red);'>⚠️ Creeperに当たると爆発するので要注意！</strong>",tags:b("bb","Stronghold Vindicatorドロップ（まれ）")+b("bo","破壊不可")},
+    {key:"Starless_Scythe",name:"Starless Scythe",kana:"スターレス・サイス",desc:"大型スイングで範囲AOEダメージ＋ダメージ分を回復するグレートサイス。Hoeとしても使用可能。",ability:"範囲攻撃と吸収回復。一部のエンチャントと連動した隠し効果あり。",tags:b("bo","End Cityなど")},
+    {key:"Sabrewing",name:"Sabrewing",kana:"セイバーウィング",desc:"特殊弓。オーバーチャージするとSpectral Arrowをホーミングウィスプ化して2回貫通させる。",ability:"オーバーチャージショット：Spectral Arrowをホーミング化→2回貫通。",tags:b("bp","AoTAクラフト（Bow + Dragon's Breath×8 + Enderite Shard×16 + Template）")},
+    {key:"Sariel",name:"Sariel",kana:"サリエル",desc:"Void Arrowを高速・高ダメージで発射し着弾時に破片を散らす特殊弓。",ability:"Void Arrow Shot：着弾時に破片を散らし広範囲にダメージ＋Voidedを付与。",tags:b("bp","AoTAクラフト")},
+    {key:"Zephyr",name:"Zephyr",kana:"ゼファー",desc:"風系の固有アクションを持つ武器。",ability:"固有アビリティあり。詳細は公式Wikiを参照。",tags:b("bo","End City等")}
+  ];
+  var html = '<div class="st"><span>🗡️</span> 武器（Weapons）詳細</div><p class="mu" style="margin-bottom:16px;">20種類以上の武器が追加。多くはTerrariaにインスパイアされた固有アクションを持ちます。</p>';
+  weapons.forEach(function(w){ html += row(w.key,w.name,w.kana,w.desc,w.tags,w.ability); });
+  return html;
+}
+
+function secTrinkets() {
+  var tr = [
+    {key:"Dragon_s_Eye",name:"Dragon's Eye",kana:"ドラゴンズ・アイ",effect:"周囲のEnder系モブを無害化。Jinx・Voided等のデバフを除去する。",drop:"Ender Dragon ドロップ"},
+    {key:"Enderman_s_Hand",name:"Enderman's Hand",kana:"エンダーマンズ・ハンド",effect:"特殊な効果。Looting上昇でドロップ率UP。",drop:"Enderman 10%（Looting有効）"},
+    {key:"Soaring_Insignia",name:"Soaring Insignia",kana:"ソアリング・インシグニア",effect:"飛行関連の能力を強化。Phantom Wingsとの相性が良い。",drop:"探索・構造物"},
+    {key:"Satchel_of_Voids",name:"Satchel of Voids",kana:"サチェル・オブ・ヴォイズ",effect:"AoTAのクラフト機能をどこでも使用可能（CDあり）。AoTAまで戻る手間が省ける。",drop:"探索 / AoTAクラフト"},
+    {key:"Life_Crystal",name:"Life Crystal",kana:"ライフ・クリスタル",effect:"体力関連の効果（最大HP増加等）。",drop:"探索"},
+    {key:"Duskberry",name:"Duskberry",kana:"ダスクベリー",effect:"ダメージ・攻撃速度ボーナス。Champion Armorのセットボーナスと加算でスタックし非常に強力。",drop:"探索"},
+    {key:"Book_of_Jinx",name:"Book of Jinx",kana:"ブック・オブ・ジンクス",effect:"使用するとJinxの雲を射出し、範囲内の敵のアーマー・タフネスを低下させるスペルブック。",drop:"End City"},
+    {key:"Tome_of_Return",name:"Tome of Return",kana:"トーム・オブ・リターン",effect:"使用するとスポーン地点にテレポートする。",drop:"End City（まれ）"},
+    {key:"Grand_Tome_of_Teleportation",name:"Grand Tome of Teleportation",kana:"グランド・トーム・オブ・テレポーテーション",effect:"Tome of Returnより強力なテレポートスペルブック。",drop:"End City（非常にまれ）"},
+    {key:"Crest_of_The_End",name:"Crest of The End",kana:"クレスト・オブ・ザ・エンド",effect:"固有の効果を持つ特殊シールド系アイテム。",drop:"探索"},
+    {key:"Prismatic_Pearl",name:"Prismatic Pearl",kana:"プリズマティック・パール",effect:"再使用可能なEnder Pearl相当のアイテム。上位互換。",drop:"探索"},
+    {key:"Book_of_Light",name:"Book of Light",kana:"ブック・オブ・ライト",effect:"光系のスペルブック。固有の効果あり。",drop:"探索・構造物"},
+    {key:"Book_of_Obstruct",name:"Book of Obstruct",kana:"ブック・オブ・オブストラクト",effect:"妨害系スペルブック。固有の効果あり。",drop:"探索・構造物"},
+    {key:"Book_of_Updraft",name:"Book of Updraft",kana:"ブック・オブ・アップドラフト",effect:"上昇気流系スペルブック。固有の効果あり。",drop:"探索・構造物"},
+    {key:"Copper_Elektra_Shield",name:"Copper Elektra Shield",kana:"コッパー・エレクトラ・シールド",effect:"電撃系の特殊シールド。",drop:"探索・構造物"},
+    {key:"Starstruck_Shield",name:"Starstruck Shield",kana:"スタースタック・シールド",effect:"星系の特殊シールド。",drop:"探索・構造物"},
+    {key:"Phantom_Item_Frame",name:"Phantom Item Frame",kana:"ファントム・アイテムフレーム",effect:"特殊なアイテムフレーム。アイテムを入れておくことで特定の効果を発揮。",drop:"探索"}
+  ];
+  var html = '<div class="st"><span>💎</span> Trinkets（トリンケット）詳細</div><p class="mu" style="margin-bottom:16px;">持つだけで効果を発揮する特殊アイテムカテゴリ。インベントリに入れておくだけでOKです。</p>';
+  tr.forEach(function(t){ html += row(t.key,t.name,t.kana,t.effect,b("bo",t.drop)); });
+  return html;
+}
+
+function secMobs() {
+  var newMobs = [
+    {key:"Voided_Zombie",name:"Voided Zombie",kana:"ヴォイデッド・ゾンビ",desc:"The Endに出現するゾンビ系モブ。攻撃にVoidedデバフ（最大HP-20%）を付与。Dragon's EyeのTrinketがあれば攻撃されなくなる。"},
+    {key:"End_Villager",name:"End Villager",kana:"エンド・ビレジャー",desc:"Amethyst Forestなどに生成されるEnd Villageに住む住人。商人として交易が可能な場合あり。友好的モブ。"},
+    {key:"End_Chicken",name:"End Chicken",kana:"エンド・チキン",desc:"The Endに生息する無害な鶏。食料不足時の緊急食料源として活用可能。鶏肉・羽をドロップ。"},
+    {key:"Empress_of_Light",name:"Empress of Light",kana:"エンプレス・オブ・ライト",desc:"Stellarity最強クラスのボス。Pixie Dustで召喚。昼間に倒すと追加ドロップが得られる。ボス攻略セクションも参照。"},
+    {key:"Shulking",name:"Shulking",kana:"シャルキング",desc:"Shulkerの変種。End Cityに出現する強化版。"}
+  ];
+  var vanilla = [
+    {key:"Ender_Dragon",name:"Ender Dragon",kana:"エンダードラゴン",change:"HP 300（バニラの1.5倍）、追加アーマーポイント、Crystal残数がボスバー下に表示",note:"ボス攻略参照"},
+    {key:"Enderman",name:"Enderman",kana:"エンダーマン",change:"OverworldのEndermanもEnderman's Handを10%の確率でドロップ（Looting有効）",note:"Dragon's Eye所持で無害化"},
+    {key:"Phantom",name:"Phantom",kana:"ファントム",change:"不眠時間が長いほどサイズ・HP・防御力が上昇。HP：15+サイズ×2。The Endにも出現しPhantom Mantleをドロップ（2.5%）",note:"Frozen系に強力な個体"},
+    {key:"Stray",name:"Stray",kana:"ストレイ",change:"The Endの氷系バイオームに出現。1%でHarvesterを装備した個体がおり死亡時に必ずドロップ。",note:"Harvester入手の貴重なルート"},
+    {key:"Piglin",name:"Piglin",kana:"ピグリン",change:"Flesh Tundraバイオームに出現。まれにHarvesterをドロップ",note:"Harvester入手ルート"}
+  ];
+  var html = '<div class="st"><span>👾</span> モブ図鑑</div><div class="subt">🆕 新規追加モブ</div>';
+  newMobs.forEach(function(m){ html += row(m.key,m.name,m.kana,m.desc); });
+  html += '<div class="subt" style="margin-top:20px;">🔄 バニラモブの変化</div>';
+  vanilla.forEach(function(m){ html += row(m.key,m.name,m.kana,m.change,b("bb",m.note)); });
+  return html;
+}
+
+function secEnchants() {
+  var enchs = [
+    {key:"Void_Strike",name:"Void Strike",kana:"ヴォイド・ストライク",cat:"⚔️ 武器",catC:"#f87171",desc:"近接武器が命中したモブにVoided I（最大HP-20%）を一時的に付与する。Voided状態の敵はHPが低い状態で戦うことになり撃破が早まる。",tags:b("bo","End City Ominous Vault")+b("bb","近接武器対応")},
+    {key:"Void_Shot",name:"Void Shot",kana:"ヴォイド・ショット",cat:"⚔️ 武器",catC:"#f87171",desc:"弓・クロスボウの矢が命中したモブにVoided I（最大HP-20%）を付与する。Void Strikeの弓・遠距離版。",tags:b("bo","End City Ominous Vault")+b("bb","弓・クロスボウ対応")},
+    {key:"Dune_Speed",name:"Dune Speed",kana:"デューン・スピード",cat:"🥾 移動",catC:"#34d399",desc:"砂・赤砂などの砂系ブロック上を走る際の移動速度を上昇させる。Desert Ruinsに埋まったSuspicious Sandを発掘して入手する。",tags:b("bb","Desert Ruins（Suspicious Sand）")+b("bg","ブーツ対応")}
+  ];
+  var html = '<div class="st"><span>✨</span> エンチャント（Enchantments）</div><p class="mu" style="margin-bottom:16px;">Stellarityが追加するエンチャントはプレイヤーが実際に使えるものと、内部技術用のものに分かれます。</p>';
+  enchs.forEach(function(e){
+    html += row(e.key,e.name,e.kana,'<span style="display:inline-block;padding:1px 8px;border-radius:10px;font-size:.72em;font-weight:700;background:'+e.catC+'22;color:'+e.catC+';margin-bottom:4px;">'+e.cat+'</span><br>'+e.desc,e.tags);
+  });
+  html += wb('<strong>⚠️ 内部技術用エンチャントについて</strong><br><span style="font-size:.85em;">Kaleidoscope・Dragonblade・Harvester等の武器は内部専用エンチャント（_technicalフォルダ）を使用して能力を実現しています。エンチャントテーブル・Villagerからは入手できません。</span>');
+  html += tip('<strong>💡 バニラエンチャントとの相性</strong><br><span style="font-size:.85em;">Dragonblade・Harvesterはほぼ全てのSword enchantに対応（HarvesterはSharpnessとFire Aspect不可）。StellaはSharpnessがスピンダメージに影響しないのでSmite等を優先。</span>');
+  return html;
+}
+
+function secMechanics() {
+  var debufs = [
+    ["Jinx","ジンクス","アーマー・タフネスを20%×Lv分減少、Luck低下","Dragon's Eye（デバフ除去）"],
+    ["Voided","ヴォイデッド","最大HPを20%×Lv分減少（効果終了後に回復）","Dragon's Eye / 時間経過"],
+    ["Prismatic Inferno","プリズマティック・インフェルノ","継続ダメージ(DoT)。Shieldでブロック不可","Fire Resistanceで軽減"]
+  ];
+  var crates = [
+    ["Ender Crate","エンダー・クレート","End系バイオーム全般","End City系アイテム、The Beginning and The Endなど"],
+    ["Frozen Crate","フローズン・クレート","Frozen系バイオーム","Harvester（v4.0.0以前）、Sweeping Edge / Smiteエンチャント書"],
+    ["Hallowed Crate","ハロウド・クレート","The Hallow","Feather Falling / Fortuneエンチャント書、Crystal Heartfishなど"],
+    ["Amethyst Crate","アメジスト・クレート","Crystal Crags","Sweeping Edge / Sharpnessエンチャント書など"],
+    ["Prismarine Crate","プリズマリン・クレート","Prismarine Forest","Aqua Affinity / Depth Striderエンチャント書など"],
+    ["Sculk Crate","スカルク・クレート","Sculk Growth","Swift Sneak / Mendingエンチャント書など"],
+    ["Hematic Crate","ヘマティック・クレート","Flesh Tundra","Curse of Vanishing / Unbreakingエンチャント書など"],
+    ["Hellfire Crate","ヘルファイア・クレート","Ashfall Deltas","Fire Aspect / Fire Protectionエンチャント書など"]
+  ];
+  return '<div class="st"><span>⚙️</span> メカニクス</div>'
+
+  // AoTA
+  +'<div class="card" style="margin-bottom:12px;">'
+  +'<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">'
+  +'<img src="https://koharasbasement.wiki.gg/images/thumb/Invicon_Aota.png/32px-Invicon_Aota.png" style="width:48px;height:48px;image-rendering:pixelated;" onerror="this.style.opacity=0" alt="AoTA">'
+  +'<div><div style="font-weight:700;font-size:1.05em;color:var(--gold);">✨ Altar of The Accursed（アルター・オブ・ザ・アカーセド）</div><div style="font-size:.8em;color:var(--muted);">Ender Dragon撃破後に解放される最重要クラフト台</div></div></div>'
+  +'<p class="mu" style="margin-bottom:10px;">中央島の石柱上に生成。アイテムを<strong style="color:var(--text);">上に投げ込む</strong>ことで組み合わせてクラフトする。GUIなし・JEI非対応のため公式Wikiのレシピ一覧を参照。</p>'
+  +'<div class="subt">📋 主なレシピ一覧</div>'
+  +'<table><thead><tr><th>成果物</th><th>素材</th></tr></thead><tbody>'
+  +'<tr><td><strong>Champion Armor</strong>（各部位）</td><td class="mu">Netherite防具 + Chorus Plating ×4 + Enderite Smithing Template</td></tr>'
+  +'<tr><td><strong>Hallowed Armor</strong>（各部位）</td><td class="mu">Netherite防具 + Hallowed Ingot ×4 + Enderite Smithing Template</td></tr>'
+  +'<tr><td><strong>Shulker Armor / Shulker Tools</strong></td><td class="mu">Netherite防具 or Tool + Shulker Shells ×4 + Enderite Smithing Template</td></tr>'
+  +'<tr><td><strong>Floral Armor</strong>（各部位）</td><td class="mu">Netherite防具 + Cherry Leaves ×8 + Enderite Smithing Template</td></tr>'
+  +'<tr><td><strong>Tamaris</strong></td><td class="mu">Netherite Sword + Wither Skeleton Skull ×1 + Enderite Shard ×8 + Enderite Smithing Template</td></tr>'
+  +'<tr><td><strong>Sabrewing / Call of The Void</strong></td><td class="mu">Bow + Dragon\'s Breath ×8 + Enderite Shard ×16 + Enderite Smithing Template</td></tr>'
+  +'<tr><td><strong>Hematic Pickaxe</strong></td><td class="mu">Netherite Pickaxe + Living Flesh ×1 + Enderite Smithing Template</td></tr>'
+  +'<tr><td><strong>Chorus Plating ×1</strong></td><td class="mu">Iron Ingot ×1 + Popped Chorus Fruit ×2</td></tr>'
+  +'<tr><td><strong>Enderite Smithing Template（複製）</strong></td><td class="mu">Template ×1 + Purpur Block ×9 + Enderite Shard ×5</td></tr>'
+  +'<tr><td><strong>Elytraトレイル変更</strong></td><td class="mu">Elytra + 染料（16色対応）。Water Bucketで解除。</td></tr>'
+  +'<tr><td><strong>エンチャントUnbinding（解除）</strong></td><td class="mu">エンチャント済みアイテム + Book → エンチャント本に移し替え</td></tr>'
+  +'</tbody></table>'
+  +tip('<strong>💡 サーバーでAoTAが生成されない場合：</strong><code>/function stellarity:_cmd/generate_end_island_features</code> を実行すると手動生成できます。')
+  +'</div>'
+
+  // Cauldron
+  +'<div class="card" style="margin-bottom:12px;">'
+  +'<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">'
+  +'<img src="https://koharasbasement.wiki.gg/images/Invicon_Cauldron.png" style="width:48px;height:48px;image-rendering:pixelated;" onerror="this.style.opacity=0" alt="Cauldron">'
+  +'<div><div style="font-weight:700;font-size:1.05em;color:var(--gold);">🪣 Cauldron Crafting（コールドロン・クラフティング）</div><div style="font-size:.8em;color:var(--muted);">Dragon\'s BreathとWater Cauldronを使った独自クラフトシステム</div></div></div>'
+  +'<div class="subt">🔧 使い方</div>'
+  +'<ol class="mu" style="padding-left:18px;line-height:2.2;margin-bottom:10px;"><li>Water Cauldronに<strong style="color:var(--text);">Dragon\'s Breath を1本投げ込む</strong>（1本で最大7回クラフト可能）</li><li>レシピ通りのアイテムを<strong style="color:var(--text);">正確な個数</strong>だけ投げ込む（余分に入れるとクラフト失敗）</li><li>1度に1アイテムしかクラフトできない</li><li>Cauldron内に浮いているアイテムは右クリックでインベントリに戻せる</li></ol>'
+  +wb('<strong>⚠️ 重要：</strong>Starlight Sootが必要なレシピは<strong>必ず最後に投げ込む</strong>こと。先に入れるとCauldronがConsecration（浄化）モードに切り替わってしまいます。')
+  +'<div class="subt" style="margin-top:10px;">📋 主なレシピ（代表例）</div>'
+  +'<table><thead><tr><th>成果物</th><th>素材（Cauldronに投げる）</th></tr></thead><tbody>'
+  +'<tr><td><strong>食料系各種</strong></td><td class="mu">バイオーム固有素材 + 食材を組み合わせ。12種類以上のレシピあり。</td></tr>'
+  +'<tr><td><strong>複合ポーション</strong></td><td class="mu">複数のポーション効果を合成した新ポーション類。</td></tr>'
+  +'<tr><td><strong>各種Stellarityアイテム</strong></td><td class="mu">Starlight Sootを使うレシピは必ず最後に投入。</td></tr>'
+  +'</tbody></table>'
+  +tip('<strong>💡</strong> 全レシピは <a href="https://koharasbasement.wiki.gg/wiki/Cauldron_Crafting" target="_blank" style="color:var(--accent);">公式Wiki（Cauldron Crafting）</a> を参照してください。')
+  +'</div>'
+
+  // Void Fishing
+  +'<div class="card" style="margin-bottom:12px;">'
+  +'<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">'
+  +'<img src="https://koharasbasement.wiki.gg/images/Invicon_Fisher_Of_Voids.png" style="width:48px;height:48px;image-rendering:pixelated;" onerror="this.style.opacity=0" alt="Void Fishing">'
+  +'<div><div style="font-weight:700;font-size:1.05em;color:var(--gold);">🎣 Void Fishing（ヴォイド・フィッシング）</div><div style="font-size:.8em;color:var(--muted);">The Endの虚空で釣りをする独自メカニクス</div></div></div>'
+  +'<div class="subt">🔧 使い方</div>'
+  +'<ol class="mu" style="padding-left:18px;line-height:2.2;margin-bottom:10px;"><li><strong style="color:var(--text);">End Gatewayを通って</strong>中央島から離れる（中央島付近ではどの魚も泳いでいない）</li><li>空中（Voidの直上）に向けて釣り竿を投げる</li><li>ウキが落下して止まりパーティクルが出たら待機（15〜45秒）</li><li>引っかかったらすばやく右クリックで引き上げる</li></ol>'
+  +'<div class="subt">⏱️ 待機時間の短縮</div>'
+  +'<table style="margin-bottom:10px;"><thead><tr><th>方法</th><th>効果</th></tr></thead><tbody>'
+  +'<tr><td><strong>Lure</strong> エンチャント</td><td class="mu">Lv.1ごとに最大待機時間から5秒短縮</td></tr>'
+  +'<tr><td><strong>Luck of the Sea</strong></td><td class="mu">最大<strong>Lv.10</strong>まで有効（バニラの上限を超えて機能）</td></tr>'
+  +'<tr><td><strong>Fisher of Voids</strong>（専用釣り竿）</td><td class="mu">最小待機時間-4秒、最大待機時間-8秒</td></tr>'
+  +'</tbody></table>'
+  +'<div class="subt">🎁 バイオーム別クレート（Crate）</div>'
+  +'<table><thead><tr><th>クレート名</th><th>釣れるバイオーム</th><th>主な内容</th></tr></thead><tbody>'
+  +crates.map(function(c){return '<tr><td><strong>'+c[0]+'</strong><br><span style="font-size:.76em;color:var(--muted);">'+c[1]+'</span></td><td class="mu">'+c[2]+'</td><td class="mu">'+c[3]+'</td></tr>';}).join('')
+  +'</tbody></table>'
+  +tip('<strong>💡</strong> 壊れたElytaを稀に釣り上げることがあります。マルチプレイでのElyta入手手段として有効です。全ルートテーブルは <a href="https://koharasbasement.wiki.gg/wiki/Void_Fishing" target="_blank" style="color:var(--accent);">公式Wiki（Void Fishing）</a> を参照。')
+  +'</div>'
+
+  // その他
+  +'<div class="card" style="margin-bottom:12px;"><div style="font-weight:700;font-size:1.05em;color:var(--gold);margin-bottom:6px;">🗡️ Armor Penetration <span style="font-size:.8em;color:var(--muted);font-weight:400;">（アーマー・ペネトレーション）</span></div><div class="mu">Stellarity固有のダメージタイプ。一部の武器・アビリティが使用し対象のアーマーポイントを無視してダメージを与える。StellaのスピンやDragonbladeのパンチの40%がこれに該当。Resistanceは有効。</div></div>'
+  +'<div class="card" style="margin-bottom:12px;"><div style="font-weight:700;font-size:1.05em;color:var(--gold);margin-bottom:6px;">🦋 Elytra Trail <span style="font-size:.8em;color:var(--muted);font-weight:400;">（エリトラ・トレイル）</span></div><div class="mu">Elytaで飛行中に独自のトレイルが出現。AoTAで染料を使い16色にカスタマイズ可能。各色でトレイルのパーティクルが異なります。Water Bucketで元に戻せます。</div></div>'
+  +'<div class="card" style="margin-bottom:12px;"><div style="font-weight:700;font-size:1.05em;color:var(--gold);margin-bottom:6px;">🔮 Consecration <span style="font-size:.8em;color:var(--muted);font-weight:400;">（コンセクレーション）</span></div><div class="mu">特定のアイテムや構造物が持つ「浄化」の仕組み。CauldronにStarlight Sootを入れるとこのモードに切り替わります。詳細は公式Wikiを参照。</div></div>'
+
+  // デバフ
+  +'<div class="card"><div class="ct">☠️ 独自デバフ一覧</div><p class="mu" style="margin-bottom:10px;font-size:.82em;">⚠️ これらは独自システムのため /effect コマンドでは確認・付与できません。</p>'
+  +'<table><thead><tr><th>名前</th><th>効果</th><th>対策</th></tr></thead><tbody>'
+  +debufs.map(function(d){return '<tr><td><strong>'+d[0]+'</strong><br><span style="font-size:.78em;color:var(--muted);">'+d[1]+'</span></td><td class="mu">'+d[2]+'</td><td class="mu">'+d[3]+'</td></tr>';}).join('')
+  +'</tbody></table></div>';
+}
+
+
+
+function secFullData() {
+  var weaponRows = [
+    ["Dragonblade","Dragonblade","剣","Ender Dragon撃破後、中央島のAltar of The Accursedに刺さった状態で出現。右クリックで取得。1ワールド1本。","破壊不可。3ヒットでDragon Stacks。3スタック時にスニークで強化パンチ。ダメージの一部が防御無視。壁衝突で大ダメージ。","Champion Armor、Duskberry、PvPと好相性。紛失注意。"],
+    ["Tamaris","Tamaris","剣","AoTA：Netherite Sword + Wither Skeleton Skull + Enderite Shard×8 + Enderite Smithing Template。","Execute：HP25%以下の敵にマーク。スニークで近くのマーク付き敵へ瞬間移動して処刑。ボスは閾値10%。","マルチでは味方を誤処刑する可能性。"],
+    ["Harvester","Harvester","剣/鎌","Frozen系Strayが低確率で装備。倒すとドロップ。Frozen Crate系ルート。","キル数で永続強化。最大強化で破壊不可。Frostburn、Embrittlement、Arctic Wind、Piercing Cold、Frost Barrierを解放。","育成型最終武器。移動速度低下はSwiftnessで補う。Sharpness/Fire Aspect不可。"],
+    ["The_Beginning_and_The_End","The Beginning and The End","双短剣","End City Ominous Vault、Ender Crate系。2本セット。","攻撃時50%でSpiritを召喚。反対の手にもう片方を持ちSpiritを見続けると最大70ブロック級テレポートと攻撃バフ。","探索・高低差移動・戦闘離脱に便利。"],
+    ["Stella","Stella","剣","Empress of Lightの夜間撃破ドロップ。","Prismatic Spin：スニーク長押しでチャージし炎の回転攻撃。防具貫通とPrismatic Infernoを付与。","Sharpnessはスピンダメージに影響しないためSmite等を検討。"],
+    ["Kaleidoscope","Kaleidoscope","特殊剣","StrongholdのVindicator等からまれに入手。","スニーク+右クリックで全方向へ電撃ダッシュ。通過した敵にダメージ。破壊不可。","Creeperに当たると爆発誘発の危険。"],
+    ["Starless_Scythe","Starless Scythe","大鎌","End City/構造物系ルート。","広範囲スイングでAOEダメージ。与ダメージに応じて回復。Hoeとしても使用可能。","集団戦・継戦能力向け。"],
+    ["Prismember","Prismember","武器","高位構造物・光系ルート。","光/プリズム系の特殊攻撃。","バージョン差があるためゲーム内説明も確認。"],
+    ["Sabrewing","Sabrewing","弓","AoTA：Bow + Dragon's Breath×8 + Enderite Shard×16 + Enderite Smithing Template。","オーバーチャージでSpectral Arrowをホーミングウィスプ化し複数回貫通。","遠距離ボス戦・空中敵対策に強い。"],
+    ["Sariel","Sariel","弓","AoTAクラフト/高位素材ルート。","Void Arrowを高速発射。着弾時に破片を散らしVoidedを付与。","Void ShotやJinxと組むと最大HP削りが強力。"],
+    ["Zephyr","Zephyr","武器","End City等の探索ルート。","風系の固有アクション。移動・ノックバック・空中制御系。","機動戦向け。"],
+    ["Stellar_Striker","Stellar Striker","混合武器","Stellarity WeaponsのMixedカテゴリ。","近接/遠距離混合の特殊武器。","入手後は専用挙動をゲーム内説明で確認。"]
+  ];
+  var armorRows = [
+    ["Champion_Armor","Champion Armor","Netherite各部位 + Chorus Plating×4 + Enderite Smithing Template → AoTA","各部位が攻撃力を強化。フルセットで攻撃ごとに次ダメージ+6%、最大5スタック、合計約+40%。","DPS最強候補。Dragonblade/Tamaris/Duskberryと相性◎。耐久管理注意。"],
+    ["Hallowed_Armor","Hallowed Armor","Netherite各部位 + Hallowed Ingot×4 + Enderite Smithing Template → AoTA。End Cityチェストにも出現。","ジャンプ・移動・スニーク速度・ステップ高さ強化。フルセットでHoly Protection、20秒CDで攻撃回避、炎耐性/水中呼吸付与。","Empress戦の回避装備。"],
+    ["Shulker_Armor","Shulker Armor","Netherite各部位 + Shulker Shell×4 + Enderite Smithing Template → AoTA","移動速度低下の代わりにLevitation/Wither免疫。被弾時50%でShulker Bullet最大3発。敵多数でResistance I。","安定攻略向け。マルチでは弾が味方へ当たる可能性。"],
+    ["Floral_Armor","Floral Armor","Netherite各部位 + Cherry Leaves×8 + Enderite Smithing Template → AoTA","回復・支援寄りのセット。","ソロ安全攻略、マルチ支援向け。"],
+    ["Dragon_Wings","Dragon Wings","Ender Dragon 20%ドロップ","Armor +6、Toughness +2、移動速度-8%、耐久+50。","防御重視の翼。"],
+    ["Empress_Wings","Empress Wings","Empress of Lightを昼間に撃破、10%ドロップ","Armor -1、移動速度+12%。","機動重視。昼Empress撃破が必要。"],
+    ["Phantom_Mantle","Phantom Mantle","The EndのPhantom 2.5%、Lootingで上昇","Elytra派生。耐久-200。特殊効果あり。","序中盤の翼代替/コレクション。"],
+    ["Phantom_Wings_item","Phantom Wings","Elytra専用エンチャント","Lv3以上でArmor Toughness +1。レベル上昇で飛行距離が少し下がる。","防御と飛行性能のトレードオフ。"]
+  ];
+  var trRows = [
+    ["Dragon_s_Eye","Dragon's Eye","Ender Dragonドロップ","周囲のEnder系モブを無害化。Jinx/Voidedなどのデバフ除去。","The End探索の安全性が大幅に向上。"],
+    ["Enderman_s_Hand","Enderman's Hand","Enderman 10%、Looting有効","Enderman系の特殊効果。","OverworldのEndermanも対象。"],
+    ["Soaring_Insignia","Soaring Insignia","探索・構造物","飛行・空中機動を強化。","Phantom Wings/Elytra系と相性。"],
+    ["Satchel_of_Voids","Satchel of Voids","探索/AoTAクラフト","AoTAクラフト機能をどこでも使用可能。クールダウンあり。","遠征先で素材を即加工できる。"],
+    ["Life_Crystal","Life Crystal","探索","最大HPなど生命力系の効果。","ボス戦前に確保したい。"],
+    ["Duskberry","Duskberry","探索","ダメージ・攻撃速度ボーナス。","Champion Armorと加算されDPSが伸びる。"],
+    ["Book_of_Jinx","Book of Jinx","End City","Jinx雲を射出。範囲内の敵のアーマー/タフネス低下。","高防御敵・ボス補助。"],
+    ["Tome_of_Return","Tome of Return","End City まれ","使用でスポーン地点へ帰還。","The Endからの帰還保険。"],
+    ["Grand_Tome_of_Teleportation","Grand Tome of Teleportation","End City 非常にまれ","上位テレポートスペル。","探索効率を大幅改善。"],
+    ["Crest_of_The_End","Crest of The End","探索","特殊シールド/防御系効果。","防御ビルド向け。"],
+    ["Prismatic_Pearl","Prismatic Pearl","探索","再使用可能なEnder Pearl相当。","移動・緊急回避に便利。"],
+    ["Book_of_Light","Book of Light","探索・構造物","光系スペル。","Empress/光系テーマ。"],
+    ["Book_of_Obstruct","Book of Obstruct","探索・構造物","妨害系スペル。","足止め・防衛向け。"],
+    ["Book_of_Updraft","Book of Updraft","探索・構造物","上昇気流系スペル。","高低差移動、落下回避。"],
+    ["Copper_Elektra_Shield","Copper Elektra Shield","探索・構造物","電撃系特殊シールド。","防御しながら反撃。"],
+    ["Starstruck_Shield","Starstruck Shield","探索・構造物","星系特殊シールド。","集団戦や防御補助。"],
+    ["Phantom_Item_Frame","Phantom Item Frame","探索","特殊アイテムフレーム。","装飾/特殊効果用途。"]
+  ];
+  function fullTable(rows, cols) {
+    return '<table><thead><tr>'+cols.map(function(c){return '<th>'+c+'</th>';}).join('')+'</tr></thead><tbody>'+
+      rows.map(function(r){return '<tr><td>'+img(r[0],"48px")+'</td>'+r.slice(1).map(function(x,i){return '<td class="mu">'+(i===0?'<strong style="color:var(--text);">'+x+'</strong>':x)+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table>';
+  }
+  var materials = [
+    ["Chorus Plating","AoTA：Iron Ingot×1 + Popped Chorus Fruit×2","Champion Armor素材"],
+    ["Enderite Shard","The End探索・構造物・高位ルート","AoTA武器/防具クラフトの主要素材"],
+    ["Enderite Smithing Template","The End構造物 / 複製：Template×1 + Purpur Block×9 + Enderite Shard×5","Netherite上位化の核"],
+    ["Hallowed Ingot","The Hallow/光系素材ルート","Hallowed Armor素材"],
+    ["Pixie Dust","The Hallow/Chapel of Light関連","Empress of Light召喚"],
+    ["Starlight Soot","Cauldron Crafting関連","Starlight Sootを使うレシピでは必ず最後に投入"],
+    ["Sand Rune","砂漠/Desert Ruins系","Dune Speedや砂漠系クラフト"],
+    ["Gilded Purpur","構造物/クラフト","装飾・クラフト素材"]
+  ];
+  var food = [
+    ["Fish of Vitality Sushi","Void Fishing/魚素材","回復・体力系食料"],
+    ["Golden Chorus Fruit","Chorus Fruit強化系","探索中の高性能食料"],
+    ["Fried Chorus Fruit","Chorus Fruit調理","携帯食"],
+    ["Frozen Carpaccio","Frozen系魚素材","氷系バイオーム報酬"],
+    ["Enderman Flesh","Enderman系ドロップ","調理でGrilled Enderman Flesh"],
+    ["Grilled Enderman Flesh","Enderman Fleshを調理","食料不足対策"],
+    ["Flarefin Koi","Void Fishing","Hellfire/Ashfall系報酬"],
+    ["Amethyst系魚","Amethyst/Crystal系バイオームのVoid Fishing","食料・クラフト素材"]
+  ];
+  return '<div class="st"><span>📚</span> 完全データ一覧（画像付き補完）</div>'+
+    '<div class="card"><div class="ct">このタブについて</div><p class="mu">元のデザイン・画像・タブ構造を維持したまま、要約で抜けやすい「入手方法」「アビリティ」「TIPS」「用途」を横断表にまとめた補完タブです。各個別タブと合わせて参照してください。</p></div>'+
+    '<div class="subt">🗡️ 武器</div>'+fullTable(weaponRows,["画像","名前","種別","入手方法","アビリティ/性能","TIPS"])+
+    '<div class="subt">🛡️ 防具・翼</div>'+fullTable(armorRows,["画像","名前","入手/クラフト","効果","TIPS"])+
+    '<div class="subt">💎 Trinkets / 特殊アイテム</div>'+fullTable(trRows,["画像","名前","入手方法","効果","TIPS"])+
+    '<div class="subt">🧱 素材</div><table><thead><tr><th>名前</th><th>入手/作成</th><th>用途</th></tr></thead><tbody>'+materials.map(function(m){return '<tr><td><strong>'+m[0]+'</strong></td><td class="mu">'+m[1]+'</td><td class="mu">'+m[2]+'</td></tr>';}).join('')+'</tbody></table>'+ 
+    '<div class="subt">🍱 食料・魚</div><table><thead><tr><th>名前</th><th>入手</th><th>用途</th></tr></thead><tbody>'+food.map(function(f){return '<tr><td><strong>'+f[0]+'</strong></td><td class="mu">'+f[1]+'</td><td class="mu">'+f[2]+'</td></tr>';}).join('')+'</tbody></table>'+ 
+    '<div class="card"><div class="ct">⚙️ 重要メカニクス早見</div><table><thead><tr><th>要素</th><th>概要</th><th>重要ポイント</th></tr></thead><tbody>'+ 
+    '<tr><td><strong>AoTA</strong></td><td class="mu">Dragon撃破後に中央島で使える儀式クラフト台。</td><td class="mu">アイテムを上に投げ込む。GUIなし。サーバーで出ない場合は生成functionあり。</td></tr>'+ 
+    '<tr><td><strong>Cauldron Crafting</strong></td><td class="mu">Water Cauldron + Dragon\'s Breathで行う独自クラフト。</td><td class="mu">素材数を正確に。Starlight Sootは最後に投入。</td></tr>'+ 
+    '<tr><td><strong>Void Fishing</strong></td><td class="mu">外周島のVoid上で釣る。</td><td class="mu">Lureで待機短縮、Luck of the SeaはLv10まで有効。</td></tr>'+ 
+    '<tr><td><strong>Armor Penetration</strong></td><td class="mu">一部攻撃が防具・Protectionを無視。</td><td class="mu">DragonbladeやStellaの一部ダメージに関係。</td></tr>'+ 
+    '</tbody></table></div>';
+}
+
+// ── タブ定義 ────────────────────────────────────
+var TABS = [
+  {label:"📖 概要",    fn:secOverview},
+  {label:"⚔️ 序盤",   fn:secBeginner},
+  {label:"🌿 バイオーム", fn:secBiomes},
+  {label:"🏰 構造物", fn:secStructures},
+  {label:"🐉 ボス",   fn:secBosses},
+  {label:"🛡️ 防具",  fn:secArmor},
+  {label:"🗡️ 武器",  fn:secWeapons},
+  {label:"💎 Trinket", fn:secTrinkets},
+  {label:"👾 モブ",   fn:secMobs},
+  {label:"✨ エンチャント", fn:secEnchants},
+  {label:"📚 完全データ", fn:secFullData},
+  {label:"⚙️ メカニクス", fn:secMechanics}
+];
+
+var nav = document.getElementById("nav");
+var main = document.getElementById("main");
+
+TABS.forEach(function(tab, i) {
+  var btn = document.createElement("button");
+  btn.className = "nb" + (i===0 ? " on" : "");
+  btn.textContent = tab.label;
+  btn.onclick = function() {
+    document.querySelectorAll(".nb").forEach(function(b){ b.classList.remove("on"); });
+    document.querySelectorAll(".sec").forEach(function(s){ s.classList.remove("on"); });
+    btn.classList.add("on");
+    document.getElementById("s"+i).classList.add("on");
+  };
+  nav.appendChild(btn);
+
+  var sec = document.createElement("div");
+  sec.className = "sec" + (i===0 ? " on" : "");
+  sec.id = "s"+i;
+  sec.innerHTML = tab.fn();
+  main.appendChild(sec);
+});
+</script>
 </body>
 </html>
